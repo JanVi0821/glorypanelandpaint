@@ -14,9 +14,8 @@ export async function submitBooking(
 	payload: BookingAppointmentPayload,
 ): Promise<BookingAppointmentResponse> {
 	try {
-		const res = await fetch('/api/booking/appointments', {
+		const res = await fetch('https://glorypanelandpaint-booking.jan-wei0821.workers.dev', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(payload),
 		});
 
