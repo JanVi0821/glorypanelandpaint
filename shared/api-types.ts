@@ -19,11 +19,6 @@ export type BookingSlot = {
 	available: boolean;
 };
 
-export type BookingSlotsResponse = {
-	date: string;
-	slots: BookingSlot[];
-};
-
 export type BookingAppointmentPayload = {
 	date: string;
 	slotStart: string;

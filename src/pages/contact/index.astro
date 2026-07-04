@@ -1,93 +1,124 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import ContactForm from '../../components/sections/ContactForm.astro';
-import { getPageSeo } from '../../data/seo';
-import { business } from '../../data/business';
-import './styles.scss';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/sections/PageHero.astro";
+import ContactForm from "../../components/sections/ContactForm.astro";
+import { getPageSeo } from "../../data/seo";
+import { business } from "../../data/business";
+import "./styles.scss";
 
-const seo = getPageSeo('contact');
+const seo = getPageSeo("contact");
 
 const mapsEmbed =
-	'https://www.google.com/maps?q=13-15+Smarts+Road,+Hornby,+Christchurch+8042&hl=en&gl=nz&output=embed';
+  "https://www.google.com/maps?q=13-15+Smarts+Road,+Hornby,+Christchurch+8042&hl=en&gl=nz&output=embed";
 ---
 
 <BaseLayout seo={seo}>
-	<div class="glory">
-		<PageHero centered padding="padding:84px 24px 56px;">
-			<h1 style="margin:0 auto;">Contact <span class="glory-gold-text">Us</span></h1>
-		</PageHero>
+  <div class="glory">
+    <PageHero centered padding="padding:84px 24px 56px;">
+      <h1 style="margin:0 auto;">
+        Contact <span class="glory-gold-text">Us</span>
+      </h1>
+    </PageHero>
 
-		<section class="glory-section glory-bg-black">
-			<div class="glory-inner">
-				<div class="glory-contact">
-					<div class="glory-info">
-						<h2 style="font-size:1.3rem;">Visit the workshop</h2>
-						<div class="glory-cinfo">
-							<div class="glory-cinfo-item">
-								<span class="glory-foot-ic" aria-hidden="true">
-									<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-										<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-										<circle cx="12" cy="10" r="3"></circle>
-									</svg>
-								</span>
-								<div>{business.address.full}</div>
-							</div>
-							<div class="glory-cinfo-item">
-								<span class="glory-foot-ic" aria-hidden="true">
-									<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-										<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"></path>
-									</svg>
-								</span>
-								<div>
-									<a href={`tel:${business.phoneTel}`}>{business.phone}</a>
-									{' '}&middot;{' '}
-									<a href={`tel:${business.mobileTel}`}>{business.mobile}</a> ({business.mobileContact})
-								</div>
-							</div>
-							<div class="glory-cinfo-item">
-								<span class="glory-foot-ic" aria-hidden="true">
-									<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-										<rect x="3" y="5" width="18" height="14" rx="2"></rect>
-										<path d="m3 7 9 6 9-6"></path>
-									</svg>
-								</span>
-								<div>
-									<a href={`mailto:${business.quotesEmail}`}>{business.quotesEmail}</a>
-								</div>
-							</div>
-						</div>
-						<div class="glory-hours-box">
-							<h3>Opening Hours</h3>
-							<ul>
-								{
-									business.hours.map((row) => (
-										<li>
-											<span>{row.days}</span>
-											<b>{row.time}</b>
-										</li>
-									))
-								}
-							</ul>
-						</div>
-						<div style="margin-top:20px;border-radius:12px;overflow:hidden;border:1px solid var(--glory-border);">
-							<iframe
-								title="Map to Glory Panel & Paint"
-								width="100%"
-								height="240"
-								style="border:0;display:block;filter:grayscale(.3) contrast(1.05);"
-								loading="lazy"
-								referrerpolicy="no-referrer-when-downgrade"
-								src={mapsEmbed}
-							/>
-						</div>
-					</div>
-					<div>
-						<h2 style="font-size:1.3rem;">Request a free quote</h2>
-						<ContactForm />
-					</div>
-				</div>
-			</div>
-		</section>
-	</div>
+    <section class="glory-section glory-bg-black">
+      <div class="glory-inner">
+        <div class="glory-contact">
+          <div class="glory-info">
+            <h2 style="font-size:1.3rem;">Visit the workshop</h2>
+            <div class="glory-cinfo">
+              <div class="glory-cinfo-item">
+                <span class="glory-foot-ic" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"
+                    ></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </span>
+                <div>{business.address.full}</div>
+              </div>
+              <div class="glory-cinfo-item">
+                <span class="glory-foot-ic" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"
+                    ></path>
+                  </svg>
+                </span>
+                <div>
+                  <a href={`tel:${business.phoneTel}`}>{business.phone}</a>
+                  {" "}&middot;{" "}
+                  <a href={`tel:${business.mobileTel}`}>{business.mobile}</a> ({
+                    business.mobileContact
+                  })
+                </div>
+              </div>
+              <div class="glory-cinfo-item">
+                <span class="glory-foot-ic" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                    <path d="m3 7 9 6 9-6"></path>
+                  </svg>
+                </span>
+                <div>
+                  <a href={`mailto:${business.quotesEmail}`}>
+                    {business.quotesEmail}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="glory-hours-box">
+              <h3>Opening Hours</h3>
+              <ul>
+                {
+                  business.hours.map((row) => (
+                    <li>
+                      <span>{row.days}</span>
+                      <b>{row.time}</b>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div
+              style="margin-top:20px;border-radius:12px;overflow:hidden;border:1px solid var(--glory-border);"
+            >
+              <iframe
+                title="Map to Glory Panel & Paint"
+                width="100%"
+                height="240"
+                style="border:0;display:block;filter:grayscale(.3) contrast(1.05);"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src={mapsEmbed}></iframe>
+            </div>
+          </div>
+          <div>
+            <h2 style="font-size:1.3rem;">Request a free quote</h2>
+            <ContactForm />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>

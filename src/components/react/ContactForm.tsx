@@ -1,12 +1,16 @@
 import { useRef, useState } from 'react';
-import type { FormEvent } from 'react';
-import type { ContactFormErrors, ContactFormValues } from '../../types/contact-form';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+	contactFormSchema,
+	type ContactFormValues,
+} from '../../lib/schemas/contact-form';
 
 interface Props {
 	quotesEmail: string;
 }
 
-const emptyValues: ContactFormValues = {
+const defaultValues: ContactFormValues = {
 	name: '',
 	phone: '',
 	email: '',
@@ -16,68 +20,56 @@ const emptyValues: ContactFormValues = {
 };
 
 export default function ContactForm({ quotesEmail }: Props) {
-	const [values, setValues] = useState<ContactFormValues>(emptyValues);
-	const [errors, setErrors] = useState<ContactFormErrors>({});
 	const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 	const [successMessage, setSuccessMessage] = useState('');
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
-	const update = (field: keyof ContactFormValues, value: string) => {
-		setValues((prev) => ({ ...prev, [field]: value }));
-		setErrors((prev) => {
-			const next = { ...prev };
-			delete next[field];
-			delete next.form;
-			return next;
-		});
-	};
+	const {
+		register,
+		handleSubmit,
+		watch,
+		setValue,
+		reset,
+		setError,
+		clearErrors,
+		formState: { errors, isSubmitting },
+	} = useForm<ContactFormValues>({
+		resolver: zodResolver(contactFormSchema),
+		defaultValues,
+	});
+
+	const photos = watch('photos');
 
 	const addPhotos = (files: FileList | null) => {
 		if (!files?.length) return;
-		setValues((prev) => ({
-			...prev,
-			photos: [...prev.photos, ...Array.from(files)].slice(0, 8),
-		}));
-		setErrors((prev) => {
-			const next = { ...prev };
-			delete next.photos;
-			return next;
-		});
+		const next = [...photos, ...Array.from(files)].slice(0, 8);
+		setValue('photos', next, { shouldValidate: true });
+		clearErrors('photos');
 	};
 
 	const removePhoto = (index: number) => {
-		setValues((prev) => ({
-			...prev,
-			photos: prev.photos.filter((_, i) => i !== index),
-		}));
+		const next = photos.filter((_, i) => i !== index);
+		setValue('photos', next, { shouldValidate: true });
 	};
 
-	const onSubmit = async (e: FormEvent) => {
-		e.preventDefault();
-		if (status === 'submitting') return;
-
-		const { validateContactForm, hasErrors } = await import('../../lib/validate-contact');
-		const nextErrors = validateContactForm(values);
-		if (hasErrors(nextErrors)) {
-			setErrors(nextErrors);
-			return;
-		}
-
+	const onSubmit = handleSubmit(async (values) => {
 		setStatus('submitting');
-		setErrors({});
+		clearErrors('root');
 
 		try {
 			const { submitContactForm } = await import('../../lib/submit-contact');
 			const result = await submitContactForm(values);
 			setSuccessMessage(result.message);
 			setStatus('success');
-			setValues(emptyValues);
+			reset(defaultValues);
 			if (fileInputRef.current) fileInputRef.current.value = '';
 		} catch {
-			setErrors({ form: 'Something went wrong. Please try again or email us directly.' });
+			setError('root', {
+				message: 'Something went wrong. Please try again or email us directly.',
+			});
 			setStatus('idle');
 		}
-	};
+	});
 
 	if (status === 'success') {
 		return (
@@ -95,23 +87,23 @@ export default function ContactForm({ quotesEmail }: Props) {
 		);
 	}
 
+	const submitting = status === 'submitting' || isSubmitting;
+
 	return (
 		<form className="glory-form" onSubmit={onSubmit} noValidate aria-label="Quote request form">
-			{errors.form && <div className="form-message form-message--error">{errors.form}</div>}
+			{errors.root && <div className="form-message form-message--error">{errors.root.message}</div>}
 
 			<div className="field">
 				<label htmlFor="contact-name">Your name</label>
 				<input
 					id="contact-name"
 					type="text"
-					name="name"
 					autoComplete="name"
 					placeholder="Jane Smith"
-					value={values.name}
-					onChange={(e) => update('name', e.target.value)}
 					aria-invalid={!!errors.name}
+					{...register('name')}
 				/>
-				{errors.name && <div className="field-error">{errors.name}</div>}
+				{errors.name && <div className="field-error">{errors.name.message}</div>}
 			</div>
 
 			<div className="field-row">
@@ -120,14 +112,12 @@ export default function ContactForm({ quotesEmail }: Props) {
 					<input
 						id="contact-phone"
 						type="tel"
-						name="phone"
 						autoComplete="tel"
 						placeholder="021 123 4567"
-						value={values.phone}
-						onChange={(e) => update('phone', e.target.value)}
 						aria-invalid={!!errors.phone}
+						{...register('phone')}
 					/>
-					{errors.phone && <div className="field-error">{errors.phone}</div>}
+					{errors.phone && <div className="field-error">{errors.phone.message}</div>}
 				</div>
 
 				<div className="field">
@@ -135,14 +125,12 @@ export default function ContactForm({ quotesEmail }: Props) {
 					<input
 						id="contact-email"
 						type="email"
-						name="email"
 						autoComplete="email"
 						placeholder="you@email.com"
-						value={values.email}
-						onChange={(e) => update('email', e.target.value)}
 						aria-invalid={!!errors.email}
+						{...register('email')}
 					/>
-					{errors.email && <div className="field-error">{errors.email}</div>}
+					{errors.email && <div className="field-error">{errors.email.message}</div>}
 				</div>
 			</div>
 
@@ -151,10 +139,8 @@ export default function ContactForm({ quotesEmail }: Props) {
 				<input
 					id="contact-vehicle"
 					type="text"
-					name="vehicle"
 					placeholder="Toyota Corolla, ABC123"
-					value={values.vehicle}
-					onChange={(e) => update('vehicle', e.target.value)}
+					{...register('vehicle')}
 				/>
 			</div>
 
@@ -162,13 +148,11 @@ export default function ContactForm({ quotesEmail }: Props) {
 				<label htmlFor="contact-message">How can we help?</label>
 				<textarea
 					id="contact-message"
-					name="message"
 					placeholder="Tell us about the damage…"
-					value={values.message}
-					onChange={(e) => update('message', e.target.value)}
 					aria-invalid={!!errors.message}
+					{...register('message')}
 				/>
-				{errors.message && <div className="field-error">{errors.message}</div>}
+				{errors.message && <div className="field-error">{errors.message.message}</div>}
 			</div>
 
 			<div className="field">
@@ -185,7 +169,6 @@ export default function ContactForm({ quotesEmail }: Props) {
 						ref={fileInputRef}
 						id="contact-photos"
 						type="file"
-						name="photos"
 						accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic"
 						multiple
 						onChange={(e) => {
@@ -205,13 +188,13 @@ export default function ContactForm({ quotesEmail }: Props) {
 						</button>
 					</div>
 					<span className="glory-upload__count" aria-live="polite">
-						{values.photos.length} of 8
+						{photos.length} of 8
 					</span>
 				</div>
-				{errors.photos && <div className="field-error">{errors.photos}</div>}
-				{values.photos.length > 0 && (
+				{errors.photos && <div className="field-error">{errors.photos.message}</div>}
+				{photos.length > 0 && (
 					<ul className="glory-upload__list">
-						{values.photos.map((file, i) => (
+						{photos.map((file, i) => (
 							<li key={`${file.name}-${file.size}-${i}`}>
 								<span>{file.name}</span>
 								<button type="button" onClick={() => removePhoto(i)} aria-label={`Remove ${file.name}`}>
@@ -224,8 +207,8 @@ export default function ContactForm({ quotesEmail }: Props) {
 			</div>
 
 			<div className="field">
-				<button type="submit" className="glory-btn-gold" disabled={status === 'submitting'}>
-					{status === 'submitting' ? 'Sending…' : 'Submit'}
+				<button type="submit" className="glory-btn-gold" disabled={submitting}>
+					{submitting ? 'Sending…' : 'Submit'}
 				</button>
 			</div>
 

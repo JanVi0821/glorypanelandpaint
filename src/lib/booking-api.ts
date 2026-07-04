@@ -3,22 +3,10 @@ import type {
 	BookingAppointmentPayload,
 	BookingAppointmentResponse,
 	BookingSlot,
-	BookingSlotsResponse,
 } from '../../shared/api-types';
 
 export async function fetchBookingSlots(date: Date): Promise<BookingSlot[]> {
 	const dateStr = toApiDate(date);
-
-	try {
-		const res = await fetch(`/api/booking/slots?date=${dateStr}`);
-		if (res.ok) {
-			const data = (await res.json()) as BookingSlotsResponse;
-			return data.slots;
-		}
-	} catch {
-		/* dev fallback when Cloudflare Functions are unavailable */
-	}
-
 	return generateSlots(dateStr);
 }
 

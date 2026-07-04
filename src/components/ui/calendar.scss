@@ -146,8 +146,8 @@
 }
 
 .glory-calendar__selected .glory-calendar__day-btn {
-	background: var(--glory-gold-grad, linear-gradient(120deg, #f2e6d2, #d8bd96 45%, #c2a576));
-	color: #0a0a0c;
+	background: var(--glory-gold-grad, linear-gradient(120deg, #f2e6d2, #d8bd96 45%, #c2a576)) !important;
+	color: #0a0a0c !important;  
 	font-weight: 700;
 }
 

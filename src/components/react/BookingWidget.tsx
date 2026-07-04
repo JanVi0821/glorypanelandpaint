@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { BOOKING_CONFIG } from '../../../shared/booking-config';
 import {
 	formatBookingDate,
@@ -8,12 +10,15 @@ import {
 } from '../../../shared/booking-slots';
 import type { BookingSlot } from '../../../shared/api-types';
 import { fetchBookingSlots, submitBooking } from '../../lib/booking-api';
-import { hasBookingErrors, validateBookingForm } from '../../lib/validate-booking';
-import type { BookingFormErrors, BookingFormValues, BookingStep } from '../../types/booking';
+import {
+	bookingFormSchema,
+	type BookingFormValues,
+} from '../../lib/schemas/booking-form';
+import type { BookingStep } from '../../types/booking';
 import { Calendar } from '../ui/calendar';
 import '../ui/calendar.scss';
 
-const emptyValues: BookingFormValues = {
+const defaultValues: BookingFormValues = {
 	name: '',
 	email: '',
 	phone: '',
@@ -27,20 +32,20 @@ export default function BookingWidget() {
 	const [selectedSlot, setSelectedSlot] = useState<BookingSlot | null>(null);
 	const [slots, setSlots] = useState<BookingSlot[]>([]);
 	const [loadingSlots, setLoadingSlots] = useState(false);
-	const [values, setValues] = useState<BookingFormValues>(emptyValues);
-	const [errors, setErrors] = useState<BookingFormErrors>({});
-	const [submitting, setSubmitting] = useState(false);
+	const [slotError, setSlotError] = useState('');
 	const [successMessage, setSuccessMessage] = useState('');
 
-	const update = (field: keyof BookingFormValues, value: string) => {
-		setValues((prev) => ({ ...prev, [field]: value }));
-		setErrors((prev) => {
-			const next = { ...prev };
-			delete next[field];
-			delete next.form;
-			return next;
-		});
-	};
+	const {
+		register,
+		handleSubmit,
+		reset,
+		setError,
+		clearErrors,
+		formState: { errors, isSubmitting },
+	} = useForm<BookingFormValues>({
+		resolver: zodResolver(bookingFormSchema),
+		defaultValues,
+	});
 
 	const loadSlots = useCallback(async (date: Date) => {
 		setLoadingSlots(true);
@@ -62,11 +67,7 @@ export default function BookingWidget() {
 	const onDateSelect = (date: Date | undefined) => {
 		if (!date || !isBookableDate(date)) return;
 		setSelectedDate(date);
-		setErrors((prev) => {
-			const next = { ...prev };
-			delete next.slot;
-			return next;
-		});
+		setSlotError('');
 	};
 
 	const goToTime = () => {
@@ -76,24 +77,17 @@ export default function BookingWidget() {
 
 	const goToDetails = () => {
 		if (!selectedSlot) {
-			setErrors((prev) => ({ ...prev, slot: 'Please select a time.' }));
+			setSlotError('Please select a time.');
 			return;
 		}
+		setSlotError('');
 		setStep('details');
 	};
 
-	const onSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		if (submitting || !selectedDate || !selectedSlot) return;
+	const onSubmit = handleSubmit(async (values) => {
+		if (!selectedDate || !selectedSlot) return;
 
-		const nextErrors = validateBookingForm(values);
-		if (hasBookingErrors(nextErrors)) {
-			setErrors(nextErrors);
-			return;
-		}
-
-		setSubmitting(true);
-		setErrors({});
+		clearErrors('root');
 
 		try {
 			const result = await submitBooking({
@@ -108,20 +102,21 @@ export default function BookingWidget() {
 			setSuccessMessage(result.message);
 			setStep('success');
 		} catch {
-			setErrors({ form: 'Something went wrong. Please try again or call us.' });
-		} finally {
-			setSubmitting(false);
+			setError('root', {
+				message: 'Something went wrong. Please try again or call us.',
+			});
 		}
-	};
+	});
 
 	const resetBooking = () => {
 		setStep('date');
 		setSelectedDate(undefined);
 		setSelectedSlot(null);
 		setSlots([]);
-		setValues(emptyValues);
-		setErrors({});
+		reset(defaultValues);
+		setSlotError('');
 		setSuccessMessage('');
+		clearErrors();
 	};
 
 	return (
@@ -178,11 +173,7 @@ export default function BookingWidget() {
 									className={`glory-booking__slot${selectedSlot?.start === slot.start ? ' is-selected' : ''}`}
 									onClick={() => {
 										setSelectedSlot(slot);
-										setErrors((prev) => {
-											const next = { ...prev };
-											delete next.slot;
-											return next;
-										});
+										setSlotError('');
 									}}
 								>
 									{formatSlotLabel(slot.start)}
@@ -191,7 +182,7 @@ export default function BookingWidget() {
 						</div>
 					)}
 
-					{errors.slot && <p className="glory-booking__error">{errors.slot}</p>}
+					{slotError && <p className="glory-booking__error">{slotError}</p>}
 
 					<div className="glory-booking__actions">
 						<button
@@ -216,21 +207,19 @@ export default function BookingWidget() {
 					</button>
 
 					<form className="glory-booking__form" onSubmit={onSubmit} noValidate>
-						{errors.form && <div className="glory-booking__form-error">{errors.form}</div>}
+						{errors.root && <div className="glory-booking__form-error">{errors.root.message}</div>}
 
 						<div className="field">
 							<label htmlFor="booking-name">Your name</label>
 							<input
 								id="booking-name"
 								type="text"
-								name="name"
 								autoComplete="name"
 								placeholder="Jane Smith"
-								value={values.name}
-								onChange={(e) => update('name', e.target.value)}
 								aria-invalid={!!errors.name}
+								{...register('name')}
 							/>
-							{errors.name && <div className="field-error">{errors.name}</div>}
+							{errors.name && <div className="field-error">{errors.name.message}</div>}
 						</div>
 
 						<div className="field-row">
@@ -239,28 +228,24 @@ export default function BookingWidget() {
 								<input
 									id="booking-phone"
 									type="tel"
-									name="phone"
 									autoComplete="tel"
 									placeholder="021 123 4567"
-									value={values.phone}
-									onChange={(e) => update('phone', e.target.value)}
 									aria-invalid={!!errors.phone}
+									{...register('phone')}
 								/>
-								{errors.phone && <div className="field-error">{errors.phone}</div>}
+								{errors.phone && <div className="field-error">{errors.phone.message}</div>}
 							</div>
 							<div className="field">
 								<label htmlFor="booking-email">Email</label>
 								<input
 									id="booking-email"
 									type="email"
-									name="email"
 									autoComplete="email"
 									placeholder="you@email.com"
-									value={values.email}
-									onChange={(e) => update('email', e.target.value)}
 									aria-invalid={!!errors.email}
+									{...register('email')}
 								/>
-								{errors.email && <div className="field-error">{errors.email}</div>}
+								{errors.email && <div className="field-error">{errors.email.message}</div>}
 							</div>
 						</div>
 
@@ -269,10 +254,8 @@ export default function BookingWidget() {
 							<input
 								id="booking-vehicle"
 								type="text"
-								name="vehicle"
 								placeholder="Toyota Corolla, ABC123"
-								value={values.vehicle}
-								onChange={(e) => update('vehicle', e.target.value)}
+								{...register('vehicle')}
 							/>
 						</div>
 
@@ -280,16 +263,14 @@ export default function BookingWidget() {
 							<label htmlFor="booking-notes">Notes (optional)</label>
 							<textarea
 								id="booking-notes"
-								name="notes"
 								placeholder={BOOKING_CONFIG.notesPlaceholder}
-								value={values.notes}
-								onChange={(e) => update('notes', e.target.value)}
+								{...register('notes')}
 							/>
 						</div>
 
 						<div className="glory-booking__actions">
-							<button type="submit" className="glory-btn-gold" disabled={submitting}>
-								{submitting ? 'Booking…' : 'Book this appointment'}
+							<button type="submit" className="glory-btn-gold" disabled={isSubmitting}>
+								{isSubmitting ? 'Booking…' : 'Book this appointment'}
 							</button>
 						</div>
 					</form>

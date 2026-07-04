@@ -4,29 +4,36 @@ import eslintPluginAstro from 'eslint-plugin-astro';
 import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import stylistic from '@stylistic/eslint-plugin';
+import noSplitHtmlTag from './eslint-rules/no-split-html-tag.js';
+
+const localPlugin = {
+  rules: {
+    'no-split-html-tag': noSplitHtmlTag,
+  },
+};
 
 export default tseslint.config(
-    eslint.configs.recommended,
-    ...tseslint.configs.recommended,
-    ...eslintPluginAstro.configs.recommended,
-    {
-        plugins: {
-            'react-hooks': reactHooks,
-            '@stylistic': stylistic,
-        },
-        languageOptions: {
-            globals: {
-                ...globals.browser,
-                ...globals.node,
-            },
-        },
-        rules: {
-            '@stylistic/indent': ['error', 4, { SwitchCase: 1 }],
-            'react-hooks/rules-of-hooks': 'error',
-            'react-hooks/exhaustive-deps': 'warn',
-        },
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...eslintPluginAstro.configs.recommended,
+  {
+    plugins: {
+      'react-hooks': reactHooks,
+      '@stylistic': stylistic,
     },
-    {
-        ignores: ['dist/**', 'node_modules/**', '.astro/**'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
     },
+    rules: {
+      '@stylistic/indent': ['error', 2],
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+    },
+  },
+  {
+    ignores: ['dist/**', 'node_modules/**', '.astro/**'],
+  },
 );

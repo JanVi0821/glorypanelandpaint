@@ -1,36 +1,44 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import BookingWidget from '../../components/sections/BookingWidget.astro';
-import { getPageSeo } from '../../data/seo';
-import { business } from '../../data/business';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/sections/PageHero.astro";
+import BookingWidget from "../../components/sections/BookingWidget.astro";
+import { getPageSeo } from "../../data/seo";
+import { business } from "../../data/business";
 
-const seo = getPageSeo('book-appointment');
+const seo = getPageSeo("book-appointment");
 ---
 
 <BaseLayout seo={seo}>
-	<div class="glory">
-		<PageHero
-			eyebrow="Insurance Vehicle Assessment · 30 min"
-			centered
-			padding="padding:84px 24px 40px;"
-		>
-			<h1 style="margin:14px auto 0;">
-				Schedule your <span class="glory-gold-text">assessment</span>
-			</h1>
-		</PageHero>
+  <div class="glory">
+    <PageHero
+      eyebrow="Insurance Vehicle Assessment · 30 min"
+      centered
+      padding="padding:84px 24px 40px;"
+    >
+      <h1 style="margin:14px auto 0;">
+        Schedule your <span class="glory-gold-text">assessment</span>
+      </h1>
+    </PageHero>
 
-		<section class="glory-section glory-bg-layer">
-			<div class="glory-inner" style="max-width:1120px;">
-				<BookingWidget />
-				<p style="text-align:center;margin-top:22px;font-size:.85rem;color:#9a9aa2;">
-					<a href="/book-online/" style="color:var(--glory-gold);text-decoration:none;">&larr; Back</a>
-					&nbsp;&middot;&nbsp; Prefer to talk? Call{' '}
-					<a href={`tel:${business.phoneTel}`} style="color:var(--glory-gold);text-decoration:none;">
-						{business.phone}
-					</a>
-				</p>
-			</div>
-		</section>
-	</div>
+    <section class="glory-section glory-bg-layer">
+      <div class="glory-inner" style="max-width:1120px;">
+        <BookingWidget />
+        <p
+          style="text-align:center;margin-top:22px;font-size:.85rem;color:#9a9aa2;"
+        >
+          <a
+            href="/book-online/"
+            style="color:var(--glory-gold);text-decoration:none;">&larr; Back</a
+          >
+          &nbsp;&middot;&nbsp; Prefer to talk? Call{" "}
+          <a
+            href={`tel:${business.phoneTel}`}
+            style="color:var(--glory-gold);text-decoration:none;"
+          >
+            {business.phone}
+          </a>
+        </p>
+      </div>
+    </section>
+  </div>
 </BaseLayout>

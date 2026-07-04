@@ -1,5 +1,5 @@
 import type { ContactFormPayload, ContactFormResponse } from '../types/api';
-import type { ContactFormErrors, ContactFormValues } from '../types/contact-form';
+import type { ContactFormValues } from '../types/contact-form';
 
 /**
  * Submit handler stub — UI-only for now.

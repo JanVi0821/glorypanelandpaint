@@ -86,12 +86,10 @@
 	}
 }
 /* ---- Site header shell ---- */
-.glory-site-header {
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	background: var(--glory-black);
+.glory-site-header__top {
+	padding: 10px 0;
 	border-bottom: 1px solid #1c1c22;
+	background: var(--glory-black);
 }
 
 .glory-site-header__inner {
@@ -100,12 +98,15 @@
 	padding: 0 24px;
 }
 
-.glory-site-header__top {
-	padding: 10px 0;
+.glory-header__main {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	background: var(--glory-black);
 	border-bottom: 1px solid #1c1c22;
 }
 
-.glory-header__main {
+.glory-header__main > .glory-site-header__inner {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
