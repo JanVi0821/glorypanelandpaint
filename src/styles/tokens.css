@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&family=Oswald:wght@500;600;700&display=swap');
+
+@font-face {
+	font-family: 'Tactic Round';
+	src: url('/fonts/TacticRoundExd-MedIt.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+	--glory-head-font: 'Tactic Round', 'Montserrat', system-ui, sans-serif;
+	--glory-body-font: Inter, system-ui, sans-serif;
+	--glory-nav-font: 'Oswald', sans-serif;
+	--glory-black: #0a0a0c;
+	--glory-layer: #0f0f13;
+	--glory-card: #16161c;
+	--glory-border: #23232b;
+	--glory-gold: #c2a576;
+	--glory-gold-grad: linear-gradient(120deg, #f2e6d2, #d8bd96 45%, #c2a576);
+	--glory-gold-shadow: #a98a60;
+}

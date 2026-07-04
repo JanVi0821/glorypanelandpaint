@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import CTASection from '../../components/sections/CTASection.astro';
+import { getPageSeo } from '../../data/seo';
+import { serviceDetails } from '../../data/services';
+import './styles.scss';
+---
+
+<BaseLayout seo={getPageSeo('services')}>
+	<div class="glory">
+		<PageHero
+			eyebrow="Christchurch panel & paint"
+			centered
+			padding="padding:84px 24px 56px;"
+		>
+			<h1 style="margin:14px auto 0;">Our <span class="glory-gold-text">Services</span></h1>
+			<p class="glory-sub" style="margin:16px auto 0;">
+				From insurance smash repairs to a flawless respray — everything your vehicle needs, under
+				one roof in Hornby.
+			</p>
+		</PageHero>
+
+		<section class="glory-section glory-bg-black">
+			<div class="glory-inner">
+				{
+					serviceDetails.map((svc) => (
+						<div class="glory-svc" id={svc.id}>
+							<div class="glory-photo">
+								<img src={svc.image} alt={svc.imageAlt} loading="lazy" width="560" height="420" />
+							</div>
+							<div>
+								<span class="glory-eyebrow">{svc.eyebrow}</span>
+								<h2>{svc.title}</h2>
+								<p>{svc.description}</p>
+								<div class="glory-btns">
+									<a class="glory-btn-gold" href={svc.ctaHref}>
+										{svc.ctaLabel}
+									</a>
+								</div>
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<CTASection
+			title="Not sure what you need?"
+			subtitle="Send us a photo and we'll tell you. Free, no obligation."
+			buttonLabel="Get a Free Quote →"
+			buttonHref="/contact/"
+		/>
+	</div>
+</BaseLayout>

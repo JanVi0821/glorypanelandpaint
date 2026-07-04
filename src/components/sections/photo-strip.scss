@@ -1,0 +1,36 @@
+/* ---- Photo strip ---- */
+.glory-strip {
+	overflow: hidden;
+	-webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+	mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.glory-strip-track {
+	display: flex;
+	gap: 18px;
+	width: max-content;
+	animation: glory-strip-scroll 56s linear infinite;
+	will-change: transform;
+}
+
+.glory-strip:hover .glory-strip-track {
+	animation-play-state: paused;
+}
+
+.glory-strip-track img {
+	flex: 0 0 auto;
+	width: clamp(260px, 30vw, 380px);
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	border-radius: 12px;
+	display: block;
+}
+
+@keyframes glory-strip-scroll {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}

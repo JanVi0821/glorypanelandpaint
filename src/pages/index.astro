@@ -1,17 +1,74 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import HomeServiceGrid from '../components/sections/HomeServiceGrid.astro';
+import PhotoStrip from '../components/sections/PhotoStrip.astro';
+import InsurerChips from '../components/sections/InsurerChips.astro';
+import ReviewMarquee from '../components/sections/ReviewMarquee.astro';
+import CTASection from '../components/sections/CTASection.astro';
+import { getPageSeo } from '../data/seo';
+import { autoBodyShopSchema } from '../lib/schema';
+import './index.scss';
 
+const seo = getPageSeo("home");
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout seo={seo} schema={autoBodyShopSchema()}>
+  <div class="glory">
+    <PageHero eyebrow="Christchurch · Panel Beating & Spray Paint" photo>
+      <h1>Reignite Your <span class="glory-gold-text">GLORY</span></h1>
+      <p class="glory-sub">
+        GLORY Panel &amp; Paint is a leading provider of quality panel beating
+        and paint services. We strive for perfection and guarantee work
+        that&rsquo;s high-quality, trustworthy and reliable, so you have peace
+        of mind your vehicle is in the best hands.
+      </p>
+      <div class="glory-btns">
+        <a class="glory-btn-gold" href="/contact/">Get a Free Quote</a>
+        <a class="glory-btn-outline" href="/book-online/">Book Online</a>
+      </div>
+      <div class="glory-trust">
+        <span>&#9733;&#9733;&#9733;&#9733;&#9733; <b>5.0</b> on Google</span>
+        <span><span class="glory-tick">&#10003;</span> Free courtesy car</span>
+        <span
+          ><span class="glory-tick">&#10003;</span> All insurance claims</span
+        >
+        <span><span class="glory-tick">&#10003;</span> Quality workmanship</span
+        >
+      </div>
+    </PageHero>
+
+    <section class="glory-section glory-bg-layer">
+      <div class="glory-inner">
+        <div class="glory-head">
+          <span class="glory-eyebrow">What we do</span>
+          <h2>Our Services</h2>
+        </div>
+        <HomeServiceGrid />
+      </div>
+    </section>
+
+    <section class="glory-section glory-bg-black">
+      <div class="glory-inner">
+        <PhotoStrip />
+      </div>
+    </section>
+
+    <section class="glory-section glory-bg-black glory-center">
+      <div class="glory-inner">
+        <div class="glory-head"><h2>We accept all insurance claims</h2></div>
+        <InsurerChips />
+      </div>
+    </section>
+
+    <ReviewMarquee />
+
+    <CTASection
+      title="Ready to get started?"
+      subtitle="Get a free, no-obligation quote on your repair — send us a few photos and we'll be in touch."
+      buttonLabel="Get a Free Quote →"
+      buttonHref="/contact/"
+      showMeta
+    />
+  </div>
+</BaseLayout>

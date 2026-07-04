@@ -1,0 +1,13 @@
+---
+import { insurerLogos } from '../../data/images';
+---
+
+<div class="glory-chips">
+	{
+		insurerLogos.map((logo) => (
+			<span class:list={['glory-chip', logo.light && 'glory-chip--light']}>
+				<img src={logo.src} alt={logo.alt} loading="lazy" width="120" height="60" />
+			</span>
+		))
+	}
+</div>

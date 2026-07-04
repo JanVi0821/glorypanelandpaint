@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import { getPageSeo } from '../../data/seo';
+import { images } from '../../data/images';
+import './styles.scss';
+---
+
+<BaseLayout seo={getPageSeo('book-online')}>
+	<div class="glory">
+		<PageHero
+			eyebrow="Insurance claims only"
+			centered
+			padding="padding:84px 24px 48px;"
+		>
+			<h1 style="margin:14px auto 0;">
+				Book your <span class="glory-gold-text">insurance assessment</span>
+			</h1>
+		</PageHero>
+
+		<section class="glory-section glory-bg-black" style="padding-top:48px;">
+			<div class="glory-inner" style="max-width:880px;">
+				<div class="glory-bookcard">
+					<div
+						class="glory-bookcard-img"
+						style={`background-image:url('${images.assessment}');`}
+						role="img"
+						aria-label="Vehicle assessment at GLORY Panel & Paint"
+					/>
+					<div class="glory-bookcard-body">
+						<h2>Insurance Assessment Appointment</h2>
+						<div class="glory-bookcard-meta">30 min</div>
+						<a href="/book-appointment/" class="glory-btn-gold">Book Now</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</BaseLayout>

@@ -1,0 +1,256 @@
+.glory-logo {
+	height: 58px;
+	width: auto;
+}
+
+.glory-nav a {
+	font-family: var(--glory-nav-font);
+	text-transform: uppercase;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	font-size: 1.2rem;
+	color: #e8e8ee;
+	text-decoration: none;
+}
+
+.glory-nav a:hover {
+	color: var(--glory-gold);
+}
+
+.glory-nav-cta > a,
+.glory-nav .glory-nav-cta > a {
+	background: var(--glory-gold-grad);
+	color: #0a0a0c !important;
+	font-weight: 800;
+	border-radius: 5px;
+	padding: 9px 18px;
+	line-height: 1;
+	font-family: var(--glory-nav-font);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.glory-nav-cta > a:hover {
+	filter: brightness(1.06);
+	color: #0a0a0c !important;
+}
+
+.glory-topbar {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+	width: 100%;
+	font-size: 0.8rem;
+	color: #9a9aa2;
+	font-family: var(--glory-body-font);
+}
+
+.glory-topbar a {
+	color: #c5c5cc !important;
+	text-decoration: none !important;
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+}
+
+.glory-topbar a:hover {
+	color: var(--glory-gold) !important;
+}
+
+.glory-topbar svg {
+	color: var(--glory-gold);
+	flex: none;
+}
+
+.glory-tb-hours {
+	color: #9a9aa2;
+}
+
+.glory-tb-divider {
+	width: 1px;
+	height: 14px;
+	background: #2a2a30;
+}
+
+@media (max-width: 768px) {
+	.glory-topbar {
+		justify-content: center;
+		font-size: 0.72rem;
+		gap: 6px 14px;
+	}
+
+	.glory-tb-divider {
+		display: none;
+	}
+}
+/* ---- Site header shell ---- */
+.glory-site-header {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	background: var(--glory-black);
+	border-bottom: 1px solid #1c1c22;
+}
+
+.glory-site-header__inner {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 0 24px;
+}
+
+.glory-site-header__top {
+	padding: 10px 0;
+	border-bottom: 1px solid #1c1c22;
+}
+
+.glory-header__main {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 14px 0;
+}
+
+.glory-header__logo {
+	display: flex;
+	flex-shrink: 0;
+	line-height: 0;
+}
+
+.glory-header__nav-list {
+	display: flex;
+	align-items: center;
+	gap: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.glory-header__nav-list > li {
+	margin: 0;
+}
+
+.glory-header__nav-list > li > a {
+	display: block;
+	padding: 10px 16px;
+	line-height: 1.2;
+}
+
+.glory-header__nav-list > li.glory-nav-cta {
+	margin-left: 12px;
+}
+
+.glory-header__nav-list > li.glory-nav-cta > a {
+	padding: 9px 18px;
+	margin-left: 0;
+}
+
+.glory-nav a[aria-current='page'] {
+	color: var(--glory-gold);
+}
+
+main#main-content {
+	min-height: 50vh;
+}
+
+/* ---- Mobile navigation ---- */
+.glory-mobile-nav {
+	display: none;
+}
+
+.glory-mobile-nav__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: #f2e6d2;
+	padding: 4px;
+	line-height: 0;
+}
+
+.glory-mobile-nav__backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(5, 5, 7, 0.72);
+	z-index: 1001;
+}
+
+.glory-mobile-nav__drawer {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: min(320px, 88vw);
+	height: 100%;
+	background: #0f0f13;
+	border-left: 1px solid var(--glory-border);
+	z-index: 1002;
+	padding: 80px 28px 32px;
+	transform: translateX(100%);
+	transition: transform 0.25s ease;
+	overflow-y: auto;
+}
+
+.glory-mobile-nav__drawer.is-open {
+	transform: translateX(0);
+}
+
+.glory-mobile-nav__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.glory-mobile-nav__list a {
+	display: block;
+	padding: 14px 0;
+	font-family: var(--glory-nav-font);
+	text-transform: uppercase;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	font-size: 1.15rem;
+	color: #e8e8ee;
+	text-decoration: none;
+}
+
+.glory-mobile-nav__list a:hover,
+.glory-mobile-nav__list a[aria-current='page'] {
+	color: var(--glory-gold);
+}
+
+.glory-mobile-nav__list .glory-nav-cta {
+	margin-top: 12px;
+}
+
+.glory-mobile-nav__list .glory-nav-cta > a {
+	display: inline-block;
+	background: var(--glory-gold-grad);
+	color: #0a0a0c !important;
+	font-weight: 800;
+	border-radius: 5px;
+	padding: 12px 20px;
+	width: auto;
+}
+
+@media (max-width: 768px) {
+	.glory-header__nav {
+		display: none;
+	}
+
+	.glory-mobile-nav {
+		display: block;
+		flex-shrink: 0;
+	}
+}
+
+@media (min-width: 769px) {
+	.glory-topbar {
+		transform: translateX(6px);
+	}
+}

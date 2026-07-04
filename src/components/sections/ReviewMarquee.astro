@@ -1,0 +1,37 @@
+---
+import { reviews, googleReviewsUrl } from '../../data/reviews';
+
+const loopReviews = [...reviews, ...reviews];
+---
+
+<section class="glory-section glory-bg-black">
+	<div class="glory-inner">
+		<div class="glory-head">
+			<span class="glory-eyebrow">Reviews</span>
+			<h2>&#9733;&#9733;&#9733;&#9733;&#9733; 5.0 from 300+ Google reviews</h2>
+		</div>
+		<div class="glory-marquee">
+			<div class="glory-track">
+				{
+					loopReviews.map((review, i) => (
+						<div class="glory-review" aria-hidden={i >= reviews.length ? true : undefined}>
+							<div class="glory-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+							<p>&ldquo;{review.text}&rdquo;</p>
+							<div class="glory-name">&mdash; {review.author}</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+		<div class="glory-btns" style="justify-content:center;margin-top:34px;">
+			<a
+				class="glory-btn-gold glory-btn-reviews"
+				href={googleReviewsUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Read all 300+ reviews on Google &rarr;
+			</a>
+		</div>
+	</div>
+</section>

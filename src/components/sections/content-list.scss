@@ -1,0 +1,19 @@
+.glory-list {
+	list-style: none;
+	padding: 0;
+	margin: 18px 0 0;
+}
+
+.glory-list li {
+	padding: 8px 0 8px 30px;
+	position: relative;
+	color: #c5c5cc;
+}
+
+.glory-list li::before {
+	content: '\2713';
+	position: absolute;
+	left: 0;
+	color: var(--glory-gold);
+	font-weight: 800;
+}

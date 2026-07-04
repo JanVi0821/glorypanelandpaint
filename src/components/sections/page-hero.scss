@@ -1,0 +1,136 @@
+/* ---- Hero ---- */
+.glory-hero {
+	background: radial-gradient(130% 110% at 78% -10%, #1c1c20, #0a0a0c 58%);
+	padding: 96px 24px 80px;
+}
+
+.glory-hero h1 {
+	font-size: clamp(2rem, 4.4vw, 3.2rem);
+	font-weight: 800;
+	line-height: 1.1;
+	margin: 14px 0 0;
+	max-width: 680px;
+	text-wrap: balance;
+}
+
+.glory-hero .glory-center h1 {
+	max-width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.glory-hero .glory-sub {
+	font-size: 1.05rem;
+	margin: 18px 0 0;
+	max-width: 520px;
+}
+
+.glory-btns {
+	margin-top: 28px;
+	display: flex;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.glory-trust {
+	margin-top: 34px;
+	padding-top: 18px;
+	border-top: 1px solid #2a2a30;
+	display: flex;
+	gap: 24px;
+	flex-wrap: wrap;
+	font-size: 0.82rem;
+	color: #9a9aa2;
+	align-items: center;
+}
+
+.glory-trust b {
+	color: #f2e6d2;
+}
+
+.glory-trust .glory-tick {
+	color: var(--glory-gold);
+	font-weight: 700;
+}
+
+/* ---- Home hero with photo background ---- */
+.glory-hero.glory-hero--photo {
+	background:
+		radial-gradient(46% 56% at 30% 52%, rgba(8, 8, 10, 0.66) 0%, rgba(8, 8, 10, 0.4) 38%, rgba(8, 8, 10, 0) 70%),
+		radial-gradient(64% 84% at 18% 50%, rgba(8, 8, 10, 0.45) 0%, rgba(8, 8, 10, 0) 60%),
+		linear-gradient(90deg, rgba(8, 8, 10, 0.84) 0%, rgba(8, 8, 10, 0.66) 32%, rgba(8, 8, 10, 0.46) 56%, rgba(8, 8, 10, 0.18) 76%, rgba(8, 8, 10, 0) 94%),
+		linear-gradient(180deg, rgba(8, 8, 10, 0.4) 0%, rgba(8, 8, 10, 0) 26%, rgba(8, 8, 10, 0) 62%, rgba(8, 8, 10, 0.48) 100%),
+		url('/images/glory-hero-forecourt.webp') center 70% / cover no-repeat;
+	background-attachment: fixed;
+	min-height: 80vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.glory-hero--photo .glory-eyebrow,
+.glory-hero--photo h1,
+.glory-hero--photo .glory-sub,
+.glory-hero--photo .glory-trust {
+	text-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.96),
+		0 2px 9px rgba(0, 0, 0, 0.85),
+		0 0 28px rgba(0, 0, 0, 0.6);
+}
+
+.glory-hero--photo h1 .glory-gold-text {
+	text-shadow: none;
+	filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.55));
+}
+
+.glory-hero--photo .glory-trust {
+	color: #ffffff;
+	font-weight: 600;
+}
+
+.glory-hero--photo .glory-trust b {
+	color: var(--glory-gold);
+}
+
+@media (max-width: 1024px) {
+	.glory-hero.glory-hero--photo {
+		min-height: 66vh;
+		background-position: center 66%;
+	}
+}
+
+@media (max-width: 768px) {
+	.glory-hero.glory-hero--photo {
+		min-height: auto;
+		padding: 84px 20px 52px;
+		background:
+			linear-gradient(180deg, rgba(8, 8, 10, 0.62) 0%, rgba(8, 8, 10, 0.52) 42%, rgba(8, 8, 10, 0.78) 100%),
+			url('/images/glory-hero-forecourt.webp') center 56% / cover no-repeat;
+		background-attachment: scroll;
+	}
+
+	.glory-hero--photo h1,
+	.glory-hero--photo .glory-sub {
+		max-width: none;
+	}
+
+	.glory-hero--photo .glory-btns {
+		width: 100%;
+	}
+
+	.glory-hero--photo .glory-btns a {
+		flex: 1 1 auto;
+		text-align: center;
+	}
+
+	.glory-hero--photo .glory-trust {
+		font-size: 0.76rem;
+		gap: 8px 16px;
+	}
+}
+
+@media (max-width: 880px) {
+	.glory-hero {
+		padding: 72px 20px 56px;
+	}
+}

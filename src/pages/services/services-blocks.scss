@@ -1,0 +1,26 @@
+/* ---- Service blocks (Services page) ---- */
+.glory-svc {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 36px;
+	align-items: center;
+	margin-bottom: 48px;
+}
+
+.glory-svc:nth-child(even) .glory-photo {
+	order: 2;
+}
+
+.glory-svc h2 {
+	font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+@media (max-width: 880px) {
+	.glory-svc {
+		grid-template-columns: 1fr;
+	}
+
+	.glory-svc:nth-child(even) .glory-photo {
+		order: 0;
+	}
+}

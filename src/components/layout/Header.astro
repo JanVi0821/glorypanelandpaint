@@ -1,0 +1,54 @@
+---
+import TopBar from './TopBar.astro';
+import MobileNav from '../react/MobileNav';
+import { business, navigation } from '../../data/business';
+import { images } from '../../data/images';
+import './header.scss';
+
+const pathname = Astro.url.pathname;
+
+function isActive(href: string) {
+	if (href === '/') return pathname === '/' || pathname === '';
+	return pathname.startsWith(href.replace(/\/$/, ''));
+}
+
+const navItems = navigation.map((item) => ({
+	label: item.label,
+	href: item.href,
+	active: isActive(item.href),
+}));
+---
+
+<header class="glory-site-header">
+	<div class="glory-site-header__inner">
+		<div class="glory-site-header__top">
+			<TopBar />
+		</div>
+		<div class="glory-header__main">
+			<a href="/" class="glory-header__logo" aria-label={`${business.name} — Home`}>
+				<img src={images.logo} alt={business.name} class="glory-logo" width="120" height="58" />
+			</a>
+
+			<nav class="glory-nav glory-header__nav" aria-label="Main navigation">
+				<ul class="glory-header__nav-list">
+					{
+						navItems.map((item) => (
+							<li>
+								<a href={item.href} aria-current={item.active ? 'page' : undefined}>
+									{item.label}
+								</a>
+							</li>
+						))
+					}
+					<li class="glory-nav-cta">
+						<a href="/book-online/" aria-current={isActive('/book-online/') ? 'page' : undefined}>
+							Book Online
+						</a>
+					</li>
+				</ul>
+			</nav>
+
+			<MobileNav client:media="(max-width: 768px)" currentPath={pathname} navItems={navItems} />
+		</div>
+	</div>
+</header>

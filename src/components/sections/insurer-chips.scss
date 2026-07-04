@@ -1,0 +1,59 @@
+/* ---- Insurer logo wall ---- */
+.glory-chips {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 16px;
+	max-width: 1100px;
+	margin: 0 auto;
+}
+
+.glory-chip {
+	flex: 0 0 185px;
+	height: 112px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #eef0f3;
+	border: 1px solid #e0e2e7;
+	border-radius: 12px;
+	padding: 6px 10px;
+	transition:
+		transform 0.15s,
+		box-shadow 0.15s;
+}
+
+.glory-chip:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+}
+
+.glory-chip img {
+	max-width: 100%;
+	max-height: 96px;
+	object-fit: contain;
+}
+
+.glory-chip--light img {
+	max-height: 100px;
+}
+
+@media (max-width: 680px) {
+	.glory-chips {
+		gap: 14px;
+	}
+
+	.glory-chip {
+		flex: 0 0 44%;
+		height: 104px;
+		padding: 8px 10px;
+	}
+
+	.glory-chip img {
+		max-height: 74px;
+	}
+
+	.glory-chip--light img {
+		max-height: 80px;
+	}
+}

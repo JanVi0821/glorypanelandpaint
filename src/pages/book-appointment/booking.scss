@@ -1,0 +1,233 @@
+/* ---- Booking widget (SSA flow parity) ---- */
+.glory-booking {
+	background: var(--glory-card);
+	border: 1px solid var(--glory-border);
+	border-radius: 14px;
+	padding: 32px 28px 36px;
+	max-width: 520px;
+	margin: 0 auto;
+}
+
+.glory-booking__header {
+	text-align: center;
+	margin-bottom: 24px;
+	padding-bottom: 18px;
+	border-bottom: 1px solid #1c1c22;
+}
+
+.glory-booking__title {
+	font-family: var(--glory-head-font);
+	font-size: clamp(1.05rem, 2.1vw, 1.35rem);
+	font-weight: 800;
+	color: #fff;
+	margin: 0;
+}
+
+.glory-booking__meta {
+	color: var(--glory-gold);
+	font-size: 0.9rem;
+	margin: 8px 0 0;
+}
+
+.glory-booking__panel {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.glory-booking__panel--success {
+	text-align: center;
+	align-items: center;
+}
+
+.glory-booking__step-label {
+	font-family: var(--glory-head-font);
+	font-size: 1rem;
+	font-weight: 700;
+	color: #fff;
+	margin: 0;
+	text-align: center;
+}
+
+.glory-booking__summary {
+	text-align: center;
+	color: var(--glory-gold);
+	font-size: 0.9rem;
+	margin: 0;
+}
+
+.glory-booking__back {
+	align-self: flex-start;
+	background: none;
+	border: none;
+	padding: 0;
+	color: var(--glory-gold);
+	font-size: 0.85rem;
+	font-family: var(--glory-body-font);
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.glory-booking__back:hover {
+	color: #f2e6d2;
+	text-decoration: underline;
+}
+
+.glory-booking__hint {
+	color: #9a9aa2;
+	font-size: 0.9rem;
+	text-align: center;
+	margin: 0;
+}
+
+.glory-booking__error {
+	color: #ff9b8a;
+	font-size: 0.82rem;
+	text-align: center;
+	margin: 0;
+}
+
+.glory-booking__slots {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+}
+
+.glory-booking__slot {
+	background: #0e0e12;
+	border: 1px solid var(--glory-border);
+	border-radius: 8px;
+	color: #e8e8ee;
+	padding: 12px 8px;
+	font-size: 0.88rem;
+	font-family: var(--glory-body-font);
+	cursor: pointer;
+	transition:
+		border-color 0.15s ease,
+		background 0.15s ease;
+}
+
+.glory-booking__slot:hover {
+	border-color: var(--glory-gold);
+}
+
+.glory-booking__slot.is-selected {
+	background: rgba(194, 165, 118, 0.14);
+	border-color: var(--glory-gold);
+	color: #fff;
+	font-weight: 600;
+}
+
+.glory-booking__actions {
+	display: flex;
+	justify-content: center;
+	margin-top: 8px;
+}
+
+.glory-booking__actions .glory-btn-gold,
+.glory-booking__actions .glory-btn-outline {
+	min-width: 180px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.glory-booking__success-title {
+	font-family: var(--glory-head-font);
+	font-size: clamp(1.2rem, 3vw, 1.5rem);
+	font-weight: 800;
+	color: #fff;
+	margin: 0;
+	line-height: 1.25;
+}
+
+.glory-booking__success-meta {
+	color: #c5c5cc;
+	font-size: 0.95rem;
+	margin: 12px 0 0;
+}
+
+/* Customer info form — reuses contact form field patterns */
+.glory-booking__form {
+	width: 100%;
+}
+
+.glory-booking__form .field {
+	margin: 0 0 14px;
+}
+
+.glory-booking__form .field-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+	margin-bottom: 14px;
+}
+
+.glory-booking__form .field-row .field {
+	margin-bottom: 0;
+}
+
+.glory-booking__form label {
+	display: block;
+	font-size: 0.82rem;
+	color: #c5c5cc;
+	font-weight: 600;
+}
+
+.glory-booking__form input,
+.glory-booking__form textarea {
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 6px;
+	background: #0e0e12;
+	border: 1px solid var(--glory-border);
+	border-radius: 7px;
+	color: #fff;
+	padding: 11px 13px;
+	font-size: 0.92rem;
+	font-family: var(--glory-body-font);
+}
+
+.glory-booking__form input::placeholder,
+.glory-booking__form textarea::placeholder {
+	color: #55555f;
+}
+
+.glory-booking__form input:focus,
+.glory-booking__form textarea:focus {
+	outline: none;
+	border-color: var(--glory-gold);
+}
+
+.glory-booking__form textarea {
+	min-height: 100px;
+	resize: vertical;
+}
+
+.glory-booking__form .field-error {
+	color: #ff9b8a;
+	font-size: 0.78rem;
+	margin-top: 4px;
+}
+
+.glory-booking__form-error {
+	border: 1px solid #ff5a5a;
+	color: #ff5a5a;
+	border-radius: 7px;
+	padding: 10px 14px;
+	font-size: 0.88rem;
+	margin-bottom: 8px;
+}
+
+@media (max-width: 560px) {
+	.glory-booking {
+		padding: 24px 18px 28px;
+	}
+
+	.glory-booking__slots {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.glory-booking__form .field-row {
+		grid-template-columns: 1fr;
+	}
+}

@@ -1,0 +1,171 @@
+/* shadcn Calendar — Glory black/gold theme (SCSS until Tailwind) */
+.glory-calendar {
+	--glory-cal-bg: #16161c;
+	--glory-cal-border: #23232b;
+	--glory-cal-gold: var(--glory-gold, #c2a576);
+	--glory-cal-text: #e8e8ee;
+	--glory-cal-muted: #9a9aa2;
+
+	width: 100%;
+	max-width: 340px;
+	margin: 0 auto;
+	padding: 16px 14px 14px;
+	background: var(--glory-cal-bg);
+	border: 1px solid var(--glory-cal-border);
+	border-radius: 12px;
+	color: var(--glory-cal-text);
+}
+
+.glory-calendar__months {
+	display: flex;
+	flex-direction: column;
+}
+
+/* navLayout="around" → [prev] [caption] [next] in one toolbar row */
+.glory-calendar__month {
+	display: grid;
+	grid-template-columns: 36px 1fr 36px;
+	grid-template-rows: auto auto;
+	column-gap: 6px;
+	row-gap: 10px;
+	align-items: center;
+}
+
+.glory-calendar__nav-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	background: #0e0e12;
+	border: 1px solid var(--glory-cal-border);
+	border-radius: 8px;
+	color: var(--glory-cal-gold);
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease,
+		color 0.15s ease;
+}
+
+.glory-calendar__nav-btn--prev {
+	grid-column: 1;
+	grid-row: 1;
+}
+
+.glory-calendar__nav-btn--next {
+	grid-column: 3;
+	grid-row: 1;
+}
+
+.glory-calendar__nav-btn:hover:not(:disabled) {
+	background: rgba(194, 165, 118, 0.14);
+	border-color: var(--glory-cal-gold);
+	color: #f2e6d2;
+}
+
+.glory-calendar__nav-btn:disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+}
+
+.glory-calendar__caption {
+	grid-column: 2;
+	grid-row: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 36px;
+	padding: 0 4px;
+	text-align: center;
+}
+
+.glory-calendar__caption-label {
+	font-family: var(--glory-head-font);
+	font-size: 0.92rem;
+	font-weight: 700;
+	color: #fff;
+	line-height: 1.2;
+	white-space: nowrap;
+}
+
+.glory-calendar__weekdays {
+	display: flex;
+}
+
+.glory-calendar__weekday {
+	flex: 1;
+	text-align: center;
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: var(--glory-cal-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	padding: 2px 0;
+}
+
+.glory-calendar__grid {
+	grid-column: 1 / -1;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.glory-calendar__week {
+	display: flex;
+	width: 100%;
+	margin-top: 2px;
+}
+
+.glory-calendar__day {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1px;
+}
+
+.glory-calendar__day-btn {
+	width: 36px;
+	height: 36px;
+	border: none;
+	border-radius: 8px;
+	background: transparent;
+	color: var(--glory-cal-text);
+	font-size: 0.88rem;
+	font-family: var(--glory-body-font);
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		color 0.15s ease;
+}
+
+.glory-calendar__day-btn:hover:not(:disabled) {
+	background: rgba(194, 165, 118, 0.14);
+	color: #fff;
+}
+
+.glory-calendar__selected .glory-calendar__day-btn {
+	background: var(--glory-gold-grad, linear-gradient(120deg, #f2e6d2, #d8bd96 45%, #c2a576));
+	color: #0a0a0c;
+	font-weight: 700;
+}
+
+.glory-calendar__today:not(.glory-calendar__selected) .glory-calendar__day-btn {
+	border: 1px solid var(--glory-cal-gold);
+}
+
+.glory-calendar__outside .glory-calendar__day-btn {
+	color: #55555f;
+	opacity: 0.45;
+}
+
+.glory-calendar__disabled .glory-calendar__day-btn {
+	color: #4a4a52;
+	opacity: 0.35;
+	cursor: not-allowed;
+}
+
+.glory-calendar__disabled .glory-calendar__day-btn:hover {
+	background: transparent;
+}

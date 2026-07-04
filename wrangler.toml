@@ -1,0 +1,7 @@
+name = "glorypanelandpaint"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-09-23"
+
+# Set in Cloudflare Pages dashboard → Settings → Environment variables:
+#   BREVO_API_KEY       — Brevo transactional email API key
+#   CONTACT_TO_EMAIL    — quotes@glorypanelandpaint.co.nz (default in code)

@@ -1,0 +1,36 @@
+@import '../../components/sections/faq.scss';
+@import '../../components/sections/insurer-chips.scss';
+@import '../../components/sections/cta-section.scss';
+
+/* ---- Steps (Insurance) ---- */
+.glory-steps {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 18px;
+}
+
+.glory-step {
+	background: var(--glory-card);
+	border: 1px solid var(--glory-border);
+	border-radius: 12px;
+	padding: 26px;
+	text-align: center;
+}
+
+.glory-stepnum {
+	width: 42px;
+	height: 42px;
+	line-height: 42px;
+	margin: 0 auto 14px;
+	border-radius: 50%;
+	background: var(--glory-gold-grad);
+	color: #0a0a0c;
+	font-weight: 800;
+	font-family: Montserrat, sans-serif;
+}
+
+@media (max-width: 880px) {
+	.glory-steps {
+		grid-template-columns: 1fr;
+	}
+}

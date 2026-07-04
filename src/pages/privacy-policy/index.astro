@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import { getPageSeo } from '../../data/seo';
+import { business } from '../../data/business';
+import './styles.scss';
+
+const seo = getPageSeo('privacy-policy');
+---
+
+<BaseLayout seo={seo}>
+	<div class="glory">
+		<PageHero centered padding="padding:84px 24px 48px;">
+			<h1 style="margin:14px auto 0;">
+				Privacy <span class="glory-gold-text">Policy</span>
+			</h1>
+		</PageHero>
+
+		<section class="glory-section glory-bg-black">
+			<div class="glory-inner" style="max-width:760px;">
+				<p>Last updated: July 2026</p>
+
+				<h2 style="margin-top:32px;">Who we are</h2>
+				<p>
+					{business.name} (&ldquo;we&rdquo;, &ldquo;us&rdquo;) operates the website{' '}
+					<a href={business.url} style="color:var(--glory-gold);">{business.url}</a> and provides panel
+					beating and paint services at {business.address.full}.
+				</p>
+
+				<h2 style="margin-top:28px;">Information we collect</h2>
+				<p>When you contact us or book online, we may collect:</p>
+				<ul class="glory-list">
+					<li>Your name, phone number and email address</li>
+					<li>Vehicle details and a description of the damage</li>
+					<li>Photos you upload with a quote or assessment request</li>
+					<li>Insurance claim information, where relevant</li>
+				</ul>
+
+				<h2 style="margin-top:28px;">How we use your information</h2>
+				<p>We use your information to:</p>
+				<ul class="glory-list">
+					<li>Respond to quote requests and booking enquiries</li>
+					<li>Arrange vehicle assessments and repairs</li>
+					<li>Communicate with you and your insurer about your claim</li>
+					<li>Improve our services and website</li>
+				</ul>
+
+				<h2 style="margin-top:28px;">Sharing your information</h2>
+				<p>
+					We do not sell your personal information. We may share details with your insurer, email
+					service providers and other parties only as needed to deliver our services.
+				</p>
+
+				<h2 style="margin-top:28px;">Storage &amp; security</h2>
+				<p>
+					We take reasonable steps to protect your information. Data is stored securely and retained
+					only as long as needed for business and legal purposes.
+				</p>
+
+				<h2 style="margin-top:28px;">Your rights</h2>
+				<p>
+					You may request access to, correction of, or deletion of your personal information by
+					contacting us at{' '}
+					<a href={`mailto:${business.email}`} style="color:var(--glory-gold);">{business.email}</a>.
+				</p>
+
+				<h2 style="margin-top:28px;">Contact</h2>
+				<p>
+					{business.name}<br />
+					{business.address.full}<br />
+					<a href={`tel:${business.phoneTel}`} style="color:var(--glory-gold);">{business.phone}</a>
+				</p>
+			</div>
+		</section>
+	</div>
+</BaseLayout>

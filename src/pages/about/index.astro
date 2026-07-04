@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import { getPageSeo } from '../../data/seo';
+import { advantageCards } from '../../data/services';
+import { images } from '../../data/images';
+import './styles.scss';
+
+const seo = getPageSeo('about');
+
+const showcaseImages = [
+	{ src: images.astonDbx, alt: 'Black Aston Martin DBX outside GLORY Panel & Paint, Hornby Christchurch' },
+	{ src: images.bentleyBlue, alt: 'Blue Bentley Continental convertible at GLORY Panel & Paint, Christchurch' },
+	{ src: images.rangeRoverRed, alt: 'Red Range Rover Sport at the GLORY Panel & Paint workshop in Hornby' },
+];
+---
+
+<BaseLayout seo={seo}>
+	<div class="glory">
+		<PageHero eyebrow="About us" centered padding="padding:84px 24px 56px;">
+			<h1 style="margin:14px auto 0;">
+				Christchurch&rsquo;s trusted <span class="glory-gold-text">panel &amp; paint</span> shop
+			</h1>
+			<p class="glory-sub" style="margin:16px auto 0;">
+				A local team that treats every repair like it&rsquo;s our own car.
+			</p>
+		</PageHero>
+
+		<section class="glory-section glory-bg-black">
+			<div class="glory-inner">
+				<div class="glory-2col">
+					<div class="glory-photo">
+						<img
+							src={images.forecourtCars}
+							alt="Porsche, Ferrari and other premium cars at GLORY Panel & Paint in Hornby, Christchurch"
+							loading="lazy"
+							width="560"
+							height="420"
+						/>
+					</div>
+					<div>
+						<span class="glory-eyebrow">Our story</span>
+						<h2>Quality, honesty, and a job done right</h2>
+						<p>
+							GLORY Panel &amp; Paint is a leading provider of quality panel beating and paint
+							services in Christchurch. We strive for perfection when it comes to our work and
+							ensure that all of our customers are satisfied with the end results.
+						</p>
+						<p style="margin-top:14px;">
+							We provide a range of services, from minor repairs to major panel and paint
+							restorations. We guarantee that our service is high-quality, trustworthy and reliable.
+						</p>
+						<p style="margin-top:14px;">
+							With us, you can have the peace of mind knowing that your vehicle is in the best hands.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="glory-section glory-bg-layer">
+			<div class="glory-inner">
+				<div class="glory-head">
+					<span class="glory-eyebrow">What sets us apart</span>
+					<h2>Built on quality</h2>
+				</div>
+				<div class="glory-grid">
+					{
+						advantageCards.map((card) => (
+							<div class="glory-card">
+								<div class="glory-disc">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={card.iconSvg} />
+								</div>
+								<h3>{card.title}</h3>
+								<p>{card.description}</p>
+							</div>
+						))
+					}
+				</div>
+				<div style="margin-top:46px;text-align:center;">
+					<span class="glory-eyebrow">The cars people trust us with</span>
+				</div>
+				<div class="glory-grid" style="margin-top:18px;">
+					{
+						showcaseImages.map((img) => (
+							<div class="glory-photo">
+								<img src={img.src} alt={img.alt} loading="lazy" width="360" height="270" />
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section class="glory-section glory-cta glory-sunburst">
+			<div class="glory-inner glory-center">
+				<h2>Come see us in Hornby</h2>
+				<div class="glory-btns" style="justify-content:center;">
+					<a class="glory-btn-gold" href="/contact/">Contact us</a>
+					<a class="glory-btn-outline" href="/book-online/">Book Online</a>
+				</div>
+				<div class="glory-meta">13–15 Smarts Rd, Hornby, Christchurch 8042 · 03 420 2022</div>
+			</div>
+		</section>
+	</div>
+</BaseLayout>

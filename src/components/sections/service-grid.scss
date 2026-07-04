@@ -1,0 +1,64 @@
+/* ---- Services grid ---- */
+.glory-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 18px;
+}
+
+.glory-card {
+	background: var(--glory-card);
+	border: 1px solid var(--glory-border);
+	border-radius: 12px;
+	padding: 26px 22px;
+	text-align: center;
+	transition:
+		border-color 0.15s,
+		transform 0.15s;
+}
+
+.glory-card:hover {
+	border-color: var(--glory-gold);
+	transform: translateY(-3px);
+}
+
+.glory-disc {
+	width: 46px;
+	height: 46px;
+	margin: 0 auto 14px;
+	border-radius: 50%;
+	background: var(--glory-gold-grad);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.glory-disc svg {
+	width: 22px;
+	height: 22px;
+	fill: none;
+	stroke: #0a0a0c;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.glory-disc svg circle,
+.glory-disc svg rect {
+	fill: none;
+}
+
+.glory-card h3 {
+	font-size: 1.05rem;
+	font-weight: 700;
+}
+
+.glory-card p {
+	font-size: 0.86rem;
+	margin: 8px 0 0;
+}
+
+@media (max-width: 880px) {
+	.glory-grid {
+		grid-template-columns: 1fr;
+	}
+}

@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import InsurerChips from '../../components/sections/InsurerChips.astro';
+import FAQ from '../../components/sections/FAQ.astro';
+import CTASection from '../../components/sections/CTASection.astro';
+import { getPageSeo } from '../../data/seo';
+import { faqPageSchema, insuranceFaq } from '../../lib/schema';
+import './styles.scss';
+
+const seo = getPageSeo('insurance');
+---
+
+<BaseLayout seo={seo} schema={faqPageSchema(insuranceFaq)}>
+	<div class="glory">
+		<PageHero
+			eyebrow="Insurance claims made easy"
+			centered
+			padding="padding:84px 24px 56px;"
+		>
+			<h1 style="margin:14px auto 0;">
+				We handle your <span class="glory-gold-text">insurance claim</span>
+			</h1>
+			<p class="glory-sub" style="margin:16px auto 0;">
+				Had an accident? Don&rsquo;t stress about the paperwork. We work with all major NZ insurers
+				and manage the whole process for you.
+			</p>
+		</PageHero>
+
+		<section class="glory-section glory-bg-layer">
+			<div class="glory-inner">
+				<div class="glory-head">
+					<span class="glory-eyebrow">How it works</span>
+					<h2>Three simple steps</h2>
+				</div>
+				<div class="glory-steps">
+					<div class="glory-step">
+						<div class="glory-stepnum">1</div>
+						<h3>Book an assessment</h3>
+						<p>Book online or call us. Bring the car in — or send photos to get started.</p>
+					</div>
+					<div class="glory-step">
+						<div class="glory-stepnum">2</div>
+						<h3>We assess &amp; quote</h3>
+						<p>We inspect the damage, quote your insurer and get the repair approved.</p>
+					</div>
+					<div class="glory-step">
+						<div class="glory-stepnum">3</div>
+						<h3>We repair &amp; handle it</h3>
+						<p>We carry out the repair to a guaranteed standard and deal with your insurer directly.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="glory-section glory-bg-black glory-center">
+			<div class="glory-inner">
+				<div class="glory-head"><h2>We accept all insurance claims</h2></div>
+				<InsurerChips />
+				<p style="margin-top:18px;font-size:.85rem;">
+					Not sure if we accept your insurer? Just ask — we almost certainly do.
+				</p>
+			</div>
+		</section>
+
+		<section class="glory-section glory-bg-layer">
+			<div class="glory-inner">
+				<div class="glory-head">
+					<span class="glory-eyebrow">Good to know</span>
+					<h2>Insurance repair FAQs</h2>
+				</div>
+				<FAQ />
+			</div>
+		</section>
+
+		<CTASection
+			title="Ready to lodge your repair?"
+			subtitle="Book your free vehicle assessment and we'll take it from there."
+			buttonLabel="Book your assessment →"
+			buttonHref="/book-online/"
+		/>
+	</div>
+</BaseLayout>

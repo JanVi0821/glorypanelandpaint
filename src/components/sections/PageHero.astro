@@ -1,0 +1,25 @@
+---
+interface Props {
+	eyebrow?: string;
+	centered?: boolean;
+	photo?: boolean;
+	padding?: string;
+}
+
+const { eyebrow, centered = false, photo = false, padding } = Astro.props;
+---
+
+<section
+	class:list={[
+		'glory-section',
+		'glory-hero',
+		'glory-sunburst',
+		photo && 'glory-hero--photo',
+	]}
+	style={padding}
+>
+	<div class:list={['glory-inner', centered && 'glory-center']}>
+		{eyebrow && <span class="glory-eyebrow">{eyebrow}</span>}
+		<slot />
+	</div>
+</section>

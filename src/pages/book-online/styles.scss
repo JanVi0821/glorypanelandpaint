@@ -1,0 +1,84 @@
+/* ---- Book Online ---- */
+.glory-note {
+	background: rgba(194, 165, 118, 0.08);
+	border: 1px solid rgba(194, 165, 118, 0.35);
+	border-radius: 10px;
+	padding: 16px 20px;
+	margin-bottom: 28px;
+	font-size: 0.9rem;
+	color: #d6d6dc;
+	line-height: 1.55;
+}
+
+.glory-note strong {
+	color: #f2e6d2;
+}
+
+.glory-note a {
+	color: var(--glory-gold);
+	text-decoration: underline;
+}
+
+.glory-bookcard {
+	display: flex;
+	gap: 0;
+	background: var(--glory-card);
+	border: 1px solid var(--glory-border);
+	border-radius: 14px;
+	overflow: hidden;
+	align-items: stretch;
+}
+
+.glory-bookcard-img {
+	flex: 0 0 260px;
+	min-height: 200px;
+	background: linear-gradient(135deg, #1a1a20, #101014);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #55555f;
+	font-size: 0.8rem;
+	text-align: center;
+	padding: 10px;
+	background-size: cover;
+	background-position: center;
+}
+
+.glory-bookcard-body {
+	flex: 1;
+	padding: 30px 32px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.glory-bookcard-body h2 {
+	font-size: clamp(1.05rem, 2.1vw, 1.35rem);
+	margin: 0;
+}
+
+.glory-bookcard-meta {
+	color: var(--glory-gold);
+	font-size: 0.9rem;
+	margin: 8px 0 12px;
+}
+
+.glory-bookcard-body p {
+	margin: 0 0 20px;
+	font-size: 0.95rem;
+}
+
+.glory-bookcard-body .glory-btn-gold {
+	align-self: flex-start;
+}
+
+@media (max-width: 680px) {
+	.glory-bookcard {
+		flex-direction: column;
+	}
+
+	.glory-bookcard-img {
+		flex-basis: auto;
+		min-height: 160px;
+	}
+}

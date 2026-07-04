@@ -1,0 +1,14 @@
+---
+import { insuranceFaq } from '../../lib/schema';
+---
+
+<div class="glory-faq">
+	{
+		insuranceFaq.map((item) => (
+			<details>
+				<summary>{item.question}</summary>
+				<p>{item.answer}</p>
+			</details>
+		))
+	}
+</div>

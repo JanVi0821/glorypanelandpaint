@@ -1,0 +1,66 @@
+import { business } from '../data/business';
+
+type FaqItem = {
+	question: string;
+	answer: string;
+};
+
+export function autoBodyShopSchema() {
+	const home = business.url;
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'AutoBodyShop',
+		'@id': `${home}#localbusiness`,
+		name: business.name,
+		url: home,
+		telephone: business.phoneTel,
+		priceRange: '$$',
+		address: {
+			'@type': 'PostalAddress',
+			streetAddress: `${business.address.street}, Hornby`,
+			addressLocality: 'Christchurch',
+			addressRegion: business.address.region,
+			postalCode: business.address.postalCode,
+			addressCountry: business.address.country,
+		},
+		openingHoursSpecification: business.openingHoursSpecification.map((slot) => ({
+			'@type': 'OpeningHoursSpecification',
+			dayOfWeek: slot.dayOfWeek,
+			opens: slot.opens,
+			closes: slot.closes,
+		})),
+	};
+}
+
+export function faqPageSchema(items: FaqItem[]) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: items.map((item) => ({
+			'@type': 'Question',
+			name: item.question,
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: item.answer,
+			},
+		})),
+	};
+}
+
+export const insuranceFaq: FaqItem[] = [
+	{
+		question: 'Which insurance companies do you accept?',
+		answer:
+			'We accept claims from all major New Zealand insurers - including IAG, AMI, State, NZI, Vero, Tower, AA Insurance, AON, Lumley and Swann. We manage your insurance claim from start to finish.',
+	},
+	{
+		question: 'Do you provide a free courtesy car?',
+		answer:
+			'Yes - we provide a free courtesy car while we repair your vehicle, so you can stay on the road (subject to availability).',
+	},
+	{
+		question: 'Can I choose my repairer?',
+		answer:
+			"Yes! As the owner, you're in charge of who repairs your vehicle. There's a myth floating around that your insurance company chooses the repairer, or will need you to get multiple quotes - this is no longer the case. You have freedom of choice over who carries out the repairs.",
+	},
+];

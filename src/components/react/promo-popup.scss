@@ -1,0 +1,134 @@
+/* ---- Promotional popup ---- */
+.glory-promo {
+	position: fixed;
+	inset: 0;
+	z-index: 99999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+.glory-promo[hidden] {
+	display: none;
+}
+
+.glory-promo__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(5, 5, 7, 0.72);
+	-webkit-backdrop-filter: blur(2px);
+	backdrop-filter: blur(2px);
+}
+
+.glory-promo__box {
+	position: relative;
+	z-index: 1;
+	width: min(560px, 100%);
+	background: #0f0f13;
+	border: 1px solid var(--glory-gold);
+	border-radius: 16px;
+	padding: 50px 46px;
+	text-align: left;
+	box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+	animation: glory-promo-in 0.25s ease both;
+}
+
+@keyframes glory-promo-in {
+	from {
+		opacity: 0;
+		transform: translateY(12px) scale(0.98);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.glory-promo__close {
+	position: absolute;
+	top: 14px;
+	right: 16px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: #cfcfd6;
+	font-size: 1.9rem;
+	line-height: 1;
+	padding: 6px;
+	transition: color 0.15s ease;
+}
+
+.glory-promo__close:hover {
+	color: #fff;
+}
+
+.glory-promo__head {
+	font-family: var(--glory-head-font);
+	font-weight: 800;
+	text-transform: uppercase;
+	color: #fff;
+	line-height: 1.06;
+	margin: 0;
+	font-size: clamp(1.9rem, 5.2vw, 2.7rem);
+}
+
+.glory-promo__head + .glory-promo__head {
+	margin-top: 16px;
+}
+
+.glory-promo__cta {
+	margin-top: 30px;
+}
+
+@media (max-width: 600px) {
+	.glory-promo {
+		inset: auto 0 0 0;
+		align-items: flex-end;
+		padding: 0;
+	}
+
+	.glory-promo__backdrop {
+		display: none;
+	}
+
+	.glory-promo__box {
+		width: 100%;
+		border-radius: 16px 16px 0 0;
+		border-bottom: none;
+		padding: 22px 22px 24px;
+		text-align: center;
+		box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+		animation: glory-promo-up 0.28s ease both;
+	}
+
+	.glory-promo__head {
+		font-size: 1.25rem;
+		line-height: 1.15;
+	}
+
+	.glory-promo__head + .glory-promo__head {
+		margin-top: 4px;
+	}
+
+	.glory-promo__cta {
+		margin-top: 16px;
+	}
+
+	.glory-promo__close {
+		top: 8px;
+		right: 10px;
+		font-size: 1.6rem;
+	}
+}
+
+@keyframes glory-promo-up {
+	from {
+		opacity: 0;
+		transform: translateY(100%);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
