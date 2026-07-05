@@ -1,6 +1,6 @@
 export const business = {
     name: 'Glory Panel & Paint',
-    url: 'https://glorypanelandpaint.co.nz',
+    url: 'https://glorypanelandpaint.jan0821.com',
     phone: '03 420 2022',
     phoneTel: '+6434202022',
     mobile: '021 0880 5994',

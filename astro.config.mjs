@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://glorypanelandpaint.co.nz',
+	site: 'https://glorypanelandpaint.jan0821.com',
 	integrations: [react(), sitemap()],
 	vite: {
 		resolve: {

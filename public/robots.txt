@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://glorypanelandpaint.co.nz/sitemap-index.xml
+Sitemap: https://glorypanelandpaint.jan0821.com/sitemap-index.xml
