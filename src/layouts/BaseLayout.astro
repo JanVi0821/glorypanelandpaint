@@ -32,6 +32,10 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
         <meta name="keywords" content={seo.focusKeyword} />
         <link rel="canonical" href={canonical} />
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap">
+
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content={business.name} />
         <meta property="og:title" content={seo.title} />

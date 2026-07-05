@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&family=Oswald:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap');
 
 @font-face {
 	font-family: 'Tactic Round';
@@ -9,7 +9,7 @@
 }
 
 :root {
-	--glory-head-font: 'Tactic Round', 'Montserrat', system-ui, sans-serif;
+	--glory-head-font: 'Tactic Round', system-ui, sans-serif;
 	--glory-body-font: Inter, system-ui, sans-serif;
 	--glory-nav-font: 'Oswald', sans-serif;
 	--glory-black: #0a0a0c;
