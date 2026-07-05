@@ -4,7 +4,7 @@ export type ContactFormPayload = {
 	phone: string;
 	vehicle?: string;
 	message: string;
-	/** Base64 data URLs or R2 keys — implementation TBD */
+	/** Public URLs returned by the upload worker */
 	photos?: string[];
 };
 

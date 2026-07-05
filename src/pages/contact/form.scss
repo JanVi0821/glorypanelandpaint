@@ -243,6 +243,28 @@
 	white-space: nowrap;
 }
 
+.glory-upload__status {
+	color: #7d7d86;
+	font-size: 0.78rem;
+}
+
+.glory-upload__status--done {
+	color: #6b9e6b;
+}
+
+.glory-upload__status--error {
+	color: #e07070;
+}
+
+.glory-upload__list-item--uploading {
+	opacity: 0.75;
+}
+
+.glory-upload__list button:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
 .glory-upload__list button {
 	flex: none;
 	width: 28px;

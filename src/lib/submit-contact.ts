@@ -14,7 +14,7 @@ export async function submitContactForm(
 		email: values.email.trim(),
 		vehicle: values.vehicle.trim() || undefined,
 		message: values.message.trim(),
-		// photos: await encodePhotos(values.photos),
+		photos: values.photos.length > 0 ? values.photos : undefined,
 	};
 
 	void payload;

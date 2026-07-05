@@ -3,12 +3,22 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
 	contactFormSchema,
+	validateContactPhoto,
 	type ContactFormValues,
 } from '../../lib/schemas/contact-form';
+import { uploadFile } from '../../lib/upload-file';
 
 interface Props {
 	quotesEmail: string;
 }
+
+type PhotoUpload = {
+	id: string;
+	name: string;
+	status: 'uploading' | 'done' | 'error';
+	url?: string;
+	error?: string;
+};
 
 const defaultValues: ContactFormValues = {
 	name: '',
@@ -19,15 +29,26 @@ const defaultValues: ContactFormValues = {
 	photos: [],
 };
 
+function syncPhotoUrls(
+	uploads: PhotoUpload[],
+	setValue: ReturnType<typeof useForm<ContactFormValues>>['setValue'],
+) {
+	const urls = uploads
+		.filter((item): item is PhotoUpload & { url: string } => item.status === 'done' && !!item.url)
+		.map((item) => item.url);
+	setValue('photos', urls, { shouldValidate: true });
+}
+
 export default function ContactForm({ quotesEmail }: Props) {
 	const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 	const [successMessage, setSuccessMessage] = useState('');
+	const [uploads, setUploads] = useState<PhotoUpload[]>([]);
+	const [fileError, setFileError] = useState<string | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const {
 		register,
 		handleSubmit,
-		watch,
 		setValue,
 		reset,
 		setError,
@@ -38,21 +59,69 @@ export default function ContactForm({ quotesEmail }: Props) {
 		defaultValues,
 	});
 
-	const photos = watch('photos');
+	const startUpload = (file: File) => {
+		const id = crypto.randomUUID();
+		setUploads((prev) => [...prev, { id, name: file.name, status: 'uploading' }]);
+
+		uploadFile(file)
+			.then((url) => {
+				setUploads((prev) => {
+					const next = prev.map((item) =>
+						item.id === id ? { ...item, status: 'done' as const, url } : item,
+					);
+					syncPhotoUrls(next, setValue);
+					return next;
+				});
+			})
+			.catch(() => {
+				setUploads((prev) =>
+					prev.map((item) =>
+						item.id === id
+							? { ...item, status: 'error' as const, error: 'Upload failed' }
+							: item,
+					),
+				);
+			});
+	};
 
 	const addPhotos = (files: FileList | null) => {
 		if (!files?.length) return;
-		const next = [...photos, ...Array.from(files)].slice(0, 8);
-		setValue('photos', next, { shouldValidate: true });
+
+		const remaining = 8 - uploads.length;
+		if (remaining <= 0) {
+			setFileError('You can upload up to 8 photos.');
+			return;
+		}
+
+		const toAdd = Array.from(files).slice(0, remaining);
+		setFileError(null);
 		clearErrors('photos');
+
+		for (const file of toAdd) {
+			const validationError = validateContactPhoto(file);
+			if (validationError) {
+				setFileError(validationError);
+				continue;
+			}
+			startUpload(file);
+		}
 	};
 
-	const removePhoto = (index: number) => {
-		const next = photos.filter((_, i) => i !== index);
-		setValue('photos', next, { shouldValidate: true });
+	const removePhoto = (id: string) => {
+		setUploads((prev) => {
+			const next = prev.filter((item) => item.id !== id);
+			syncPhotoUrls(next, setValue);
+			return next;
+		});
+		setFileError(null);
 	};
 
 	const onSubmit = handleSubmit(async (values) => {
+		if (uploads.some((item) => item.status === 'uploading')) {
+			setError('root', { message: 'Please wait for photos to finish uploading.' });
+			return;
+		}
+
 		setStatus('submitting');
 		clearErrors('root');
 
@@ -62,6 +131,7 @@ export default function ContactForm({ quotesEmail }: Props) {
 			setSuccessMessage(result.message);
 			setStatus('success');
 			reset(defaultValues);
+			setUploads([]);
 			if (fileInputRef.current) fileInputRef.current.value = '';
 		} catch {
 			setError('root', {
@@ -87,6 +157,7 @@ export default function ContactForm({ quotesEmail }: Props) {
 		);
 	}
 
+	const hasUploading = uploads.some((item) => item.status === 'uploading');
 	const submitting = status === 'submitting' || isSubmitting;
 
 	return (
@@ -169,7 +240,7 @@ export default function ContactForm({ quotesEmail }: Props) {
 						ref={fileInputRef}
 						id="contact-photos"
 						type="file"
-						accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic"
+						accept="image/jpg,image/jpeg,image/png,image/webp,image/heic,image/heif,.heic"
 						multiple
 						onChange={(e) => {
 							addPhotos(e.target.files);
@@ -188,16 +259,46 @@ export default function ContactForm({ quotesEmail }: Props) {
 						</button>
 					</div>
 					<span className="glory-upload__count" aria-live="polite">
-						{photos.length} of 8
+						{uploads.length} of 8
 					</span>
 				</div>
-				{errors.photos && <div className="field-error">{errors.photos.message}</div>}
-				{photos.length > 0 && (
+				{(fileError || errors.photos) && (
+					<div className="field-error">{fileError ?? errors.photos?.message}</div>
+				)}
+				{uploads.length > 0 && (
 					<ul className="glory-upload__list">
-						{photos.map((file, i) => (
-							<li key={`${file.name}-${file.size}-${i}`}>
-								<span>{file.name}</span>
-								<button type="button" onClick={() => removePhoto(i)} aria-label={`Remove ${file.name}`}>
+						{uploads.map((item) => (
+							<li
+								key={item.id}
+								className={
+									item.status === 'uploading'
+										? 'glory-upload__list-item--uploading'
+										: item.status === 'error'
+											? 'glory-upload__list-item--error'
+											: undefined
+								}
+							>
+								<span>
+									{item.name}
+									{item.status === 'uploading' && (
+										<span className="glory-upload__status"> — Uploading…</span>
+									)}
+									{item.status === 'done' && (
+										<span className="glory-upload__status glory-upload__status--done"> — Uploaded</span>
+									)}
+									{item.status === 'error' && (
+										<span className="glory-upload__status glory-upload__status--error">
+											{' '}
+											— {item.error}
+										</span>
+									)}
+								</span>
+								<button
+									type="button"
+									onClick={() => removePhoto(item.id)}
+									aria-label={`Remove ${item.name}`}
+									disabled={item.status === 'uploading'}
+								>
 									&times;
 								</button>
 							</li>
@@ -207,8 +308,8 @@ export default function ContactForm({ quotesEmail }: Props) {
 			</div>
 
 			<div className="field">
-				<button type="submit" className="glory-btn-gold" disabled={submitting}>
-					{submitting ? 'Sending…' : 'Submit'}
+				<button type="submit" className="glory-btn-gold" disabled={submitting || hasUploading}>
+					{submitting ? 'Sending…' : hasUploading ? 'Waiting for uploads…' : 'Submit'}
 				</button>
 			</div>
 
