@@ -30,8 +30,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 <html lang="en-NZ">
     <head>
         <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content={Astro.generator} />
         <ClientRouter />
@@ -88,22 +87,6 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 						    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
 						    f.parentNode.insertBefore(j, f);
 						})(window, document, 'script', 'dataLayer', 'GTM-WR3WC8FG');
-
-						// ClientRouter turns navigation into SPA-style swaps, which GTM
-						// can't see by itself. Push a virtual pageview on each navigation
-						// (skip the first astro:page-load — GTM already tracks the landing).
-						let gtmFirstLoad = true;
-						document.addEventListener('astro:page-load', () => {
-						    if (gtmFirstLoad) {
-						        gtmFirstLoad = false;
-						        return;
-						    }
-						    window.dataLayer.push({
-						        event: 'virtual_pageview',
-						        page_path: window.location.pathname,
-						        page_title: document.title,
-						    });
-						});
 		            </script>
 		        </>
 		    )
