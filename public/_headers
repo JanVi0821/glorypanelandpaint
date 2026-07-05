@@ -1,0 +1,10 @@
+# Hashed build assets — safe to cache forever
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Unhashed images — cache for a week
+/images/*
+  Cache-Control: public, max-age=604800

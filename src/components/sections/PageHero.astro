@@ -1,4 +1,6 @@
 ---
+import HeroPhoto from "../react/HeroPhoto";
+
 interface Props {
   eyebrow?: string;
   centered?: boolean;
@@ -18,57 +20,9 @@ const { eyebrow, centered = false, photo = false, padding } = Astro.props;
   ]}
   style={padding}
 >
-  {
-    photo && (
-      <img
-        class="glory-hero__photo"
-        src="/images/glory-hero-forecourt.webp"
-        alt=""
-        width="1920"
-        height="1098"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-      />
-    )
-  }
+  {photo && <HeroPhoto client:load />}
   <div class:list={["glory-inner", centered && "glory-center"]}>
     {eyebrow && <span class="glory-eyebrow">{eyebrow}</span>}
     <slot />
   </div>
 </section>
-
-<script>
-  const photo = document.querySelector<HTMLImageElement>(
-    ".glory-hero--photo .glory-hero__photo",
-  );
-
-  if (photo) {
-    // Dynamic import keeps gsap out of the bundle for pages without a photo hero
-    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
-      ([{ gsap }, { ScrollTrigger }]) => {
-        gsap.registerPlugin(ScrollTrigger);
-
-        gsap
-          .matchMedia()
-          .add(
-            "(min-width: 769px) and (prefers-reduced-motion: no-preference)",
-            () => {
-              gsap.to(photo, {
-                // The image lags behind the scroll, revealing itself as the hero leaves.
-                // The top gap this opens up is always above the viewport, so no oversizing needed.
-                yPercent: 100,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: ".glory-hero--photo",
-                  start: "top top",
-                  end: "bottom top",
-                  scrub: true,
-                },
-              });
-            },
-          );
-      },
-    );
-  }
-</script>

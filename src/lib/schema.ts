@@ -1,4 +1,5 @@
 import { business } from '../data/business';
+import { googleReviewsUrl } from '../data/reviews';
 
 type FaqItem = {
 	question: string;
@@ -13,7 +14,9 @@ export function autoBodyShopSchema() {
 		'@id': `${home}#localbusiness`,
 		name: business.name,
 		url: home,
+		image: `${home}/images/og-image.jpg`,
 		telephone: business.phoneTel,
+		email: business.email,
 		priceRange: '$$',
 		address: {
 			'@type': 'PostalAddress',
@@ -23,6 +26,17 @@ export function autoBodyShopSchema() {
 			postalCode: business.address.postalCode,
 			addressCountry: business.address.country,
 		},
+		geo: {
+			'@type': 'GeoCoordinates',
+			latitude: business.geo.latitude,
+			longitude: business.geo.longitude,
+		},
+		hasMap: googleReviewsUrl,
+		areaServed: {
+			'@type': 'City',
+			name: 'Christchurch',
+		},
+		sameAs: [business.social.facebook, business.social.instagram],
 		openingHoursSpecification: business.openingHoursSpecification.map((slot) => ({
 			'@type': 'OpeningHoursSpecification',
 			dayOfWeek: slot.dayOfWeek,

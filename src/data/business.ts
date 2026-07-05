@@ -33,6 +33,10 @@ export const business = {
             closes: '17:00',
         },
     ],
+    geo: {
+        latitude: -43.540391,
+        longitude: 172.5253968,
+    },
     social: {
         facebook: 'https://www.facebook.com/p/GLORY-Panel-Paint-100092353875124/',
         instagram: 'https://www.instagram.com/glory_panel_paint/',

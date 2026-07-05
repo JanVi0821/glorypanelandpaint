@@ -1,8 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap');
+/* Inter & Oswald are self-hosted via @fontsource imports in BaseLayout.astro */
 
 @font-face {
 	font-family: 'Tactic Round';
-	src: url('/fonts/TacticRoundExd-MedIt.ttf') format('truetype');
+	src:
+		url('/fonts/TacticRoundExd-MedIt.woff2') format('woff2'),
+		url('/fonts/TacticRoundExd-MedIt.ttf') format('truetype');
 	font-weight: 500;
 	font-style: normal;
 	font-display: swap;

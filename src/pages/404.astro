@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/sections/PageHero.astro";
+import { getPageSeo } from "../data/seo";
+
+const seo = getPageSeo("not-found");
+---
+
+<BaseLayout seo={seo}>
+  <div class="glory">
+    <PageHero centered padding="padding:110px 24px 80px;">
+      <h1 style="margin:14px auto 0;">
+        Page <span class="glory-gold-text">not found</span>
+      </h1>
+      <p class="glory-sub" style="margin-top:18px; max-width:unset;">
+        Sorry, we couldn&rsquo;t find that page. It may have moved &mdash; try
+        one of the links below or head back to the homepage.
+      </p>
+      <div class="glory-btns" style="justify-content:center;">
+        <a class="glory-btn-gold" href="/">Back to Home</a>
+        <a class="glory-btn-outline" href="/contact/">Contact Us</a>
+      </div>
+    </PageHero>
+  </div>
+</BaseLayout>

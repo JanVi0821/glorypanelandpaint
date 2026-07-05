@@ -3,6 +3,8 @@ export type PageSeo = {
     description: string;
     focusKeyword: string;
     path: string;
+    /** Exclude from search engine indexing (functional/utility pages). */
+    noindex?: boolean;
 };
 
 export const siteSeo = {
@@ -61,6 +63,16 @@ export const pageSeo: Record<string, PageSeo> = {
         title: 'Book Appointment | Glory Panel & Paint',
         description:
 			'Schedule your free vehicle assessment at Glory Panel & Paint, Hornby Christchurch. Choose a date and time that works for you.',
+        // Step 2 of the booking funnel — keep search traffic on /book-online/
+        noindex: true,
+    },
+    'not-found': {
+        path: '/404/',
+        focusKeyword: 'page not found',
+        title: 'Page Not Found | Glory Panel & Paint',
+        description:
+			'Sorry, we couldn\'t find that page. Head back to Glory Panel & Paint for panel beating, spray painting and insurance repairs in Christchurch.',
+        noindex: true,
     },
     'privacy-policy': {
         path: '/privacy-policy/',
