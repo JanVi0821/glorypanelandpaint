@@ -55,17 +55,41 @@
 
 /* ---- Home hero with photo background ---- */
 .glory-hero.glory-hero--photo {
-	background:
-		radial-gradient(46% 56% at 30% 52%, rgba(8, 8, 10, 0.66) 0%, rgba(8, 8, 10, 0.4) 38%, rgba(8, 8, 10, 0) 70%),
-		radial-gradient(64% 84% at 18% 50%, rgba(8, 8, 10, 0.45) 0%, rgba(8, 8, 10, 0) 60%),
-		linear-gradient(90deg, rgba(8, 8, 10, 0.84) 0%, rgba(8, 8, 10, 0.66) 32%, rgba(8, 8, 10, 0.46) 56%, rgba(8, 8, 10, 0.18) 76%, rgba(8, 8, 10, 0) 94%),
-		linear-gradient(180deg, rgba(8, 8, 10, 0.4) 0%, rgba(8, 8, 10, 0) 26%, rgba(8, 8, 10, 0) 62%, rgba(8, 8, 10, 0.48) 100%),
-		url('/images/glory-hero-forecourt.webp') center 70% / cover no-repeat;
-	background-attachment: fixed;
+	background: #08080a;
 	min-height: 80vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+/* LCP image rendered as an eager, high-priority <img> instead of a CSS background.
+   The parallax effect is driven by GSAP ScrollTrigger (see PageHero.astro),
+   which translates the image on scroll; overflow: hidden on the section
+   (via .glory-sunburst) clips the overflow. */
+.glory-hero .glory-hero__photo {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center 70%;
+	pointer-events: none;
+	will-change: transform;
+}
+
+/* Gradient scrims sit above the photo (painted after it), below the content (z-index: 1) */
+.glory-hero.glory-hero--photo::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background:
+		radial-gradient(46% 56% at 30% 52%, rgba(8, 8, 10, 0.66) 0%, rgba(8, 8, 10, 0.4) 38%, rgba(8, 8, 10, 0) 70%),
+		radial-gradient(64% 84% at 18% 50%, rgba(8, 8, 10, 0.45) 0%, rgba(8, 8, 10, 0) 60%),
+		linear-gradient(90deg, rgba(8, 8, 10, 0.84) 0%, rgba(8, 8, 10, 0.66) 32%, rgba(8, 8, 10, 0.46) 56%, rgba(8, 8, 10, 0.18) 76%, rgba(8, 8, 10, 0) 94%),
+		linear-gradient(180deg, rgba(8, 8, 10, 0.4) 0%, rgba(8, 8, 10, 0) 26%, rgba(8, 8, 10, 0) 62%, rgba(8, 8, 10, 0.48) 100%);
 }
 
 .glory-hero--photo .glory-eyebrow,
@@ -95,7 +119,10 @@
 @media (max-width: 1024px) {
 	.glory-hero.glory-hero--photo {
 		min-height: 66vh;
-		background-position: center 66%;
+	}
+
+	.glory-hero .glory-hero__photo {
+		object-position: center 66%;
 	}
 }
 
@@ -103,10 +130,15 @@
 	.glory-hero.glory-hero--photo {
 		min-height: auto;
 		padding: 84px 20px 52px;
-		background:
-			linear-gradient(180deg, rgba(8, 8, 10, 0.62) 0%, rgba(8, 8, 10, 0.52) 42%, rgba(8, 8, 10, 0.78) 100%),
-			url('/images/glory-hero-forecourt.webp') center 56% / cover no-repeat;
-		background-attachment: scroll;
+	}
+
+	/* No parallax on mobile (GSAP matchMedia skips it below 769px) */
+	.glory-hero .glory-hero__photo {
+		object-position: center 56%;
+	}
+
+	.glory-hero.glory-hero--photo::after {
+		background: linear-gradient(180deg, rgba(8, 8, 10, 0.62) 0%, rgba(8, 8, 10, 0.52) 42%, rgba(8, 8, 10, 0.78) 100%);
 	}
 
 	.glory-hero--photo h1,
