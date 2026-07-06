@@ -1,0 +1,12 @@
+---
+import GloryGoldText from '../react/GloryGoldText';
+
+interface Props {
+	text: string;
+	class?: string;
+}
+
+const { text, class: className } = Astro.props;
+---
+
+<GloryGoldText client:visible text={text} className={className} />

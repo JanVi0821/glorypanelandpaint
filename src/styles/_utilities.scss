@@ -1,12 +1,3 @@
-/* ---- Gold gradient text helper ---- */
-.glory-gold-text {
-	background: var(--glory-gold-grad);
-	-webkit-background-clip: text;
-	background-clip: text;
-	-webkit-text-fill-color: transparent;
-	color: transparent;
-}
-
 /* ---- Gold gradient button ---- */
 .glory-btn-gold,
 .glory-btn-gold:visited {

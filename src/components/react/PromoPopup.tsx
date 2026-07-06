@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import GloryGoldText from '@/components/react/GloryGoldText';
 import { promo } from '../../data/promo';
 
 export default function PromoPopup() {
@@ -58,7 +59,7 @@ export default function PromoPopup() {
                 <p className="glory-promo__head">{promo.headline}</p>
                 <p className="glory-promo__head">
                     {promo.subline}{' '}
-                    <span className="glory-gold-text">{promo.highlight}</span>
+                    <GloryGoldText text={promo.highlight} />
                 </p>
                 <a className="glory-btn-gold glory-promo__cta" href={promo.ctaHref} onClick={close}>
                     {promo.ctaLabel}

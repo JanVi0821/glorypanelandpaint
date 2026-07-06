@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
+import PageHero from '../../components/astro/sections/PageHero.astro';
+import GloryGoldText from '../../components/astro/GloryGoldText.astro';
 import { getPageSeo } from '../../data/seo';
 import { advantageCards } from '../../data/services';
 import { images } from '../../data/images';
@@ -19,7 +20,7 @@ const showcaseImages = [
 	<div class="glory">
 		<PageHero eyebrow="About us" centered padding="padding:84px 24px 56px;">
 			<h1 style="margin:14px auto 0;">
-				Christchurch&rsquo;s trusted <span class="glory-gold-text">panel &amp; paint</span> shop
+				Christchurch&rsquo;s trusted <GloryGoldText text="panel & paint" /> shop
 			</h1>
 			<p class="glory-sub" style="margin:16px auto 0;">
 				A local team that treats every repair like it&rsquo;s our own car.

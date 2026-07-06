@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHero from "../../components/sections/PageHero.astro";
-import BookingWidget from "../../components/sections/BookingWidget.astro";
+import PageHero from "../../components/astro/sections/PageHero.astro";
+import GloryGoldText from "../../components/astro/GloryGoldText.astro";
+import BookingWidget from "../../components/astro/sections/BookingWidget.astro";
 import { getPageSeo } from "../../data/seo";
 import { business } from "../../data/business";
 
@@ -16,7 +17,7 @@ const seo = getPageSeo("book-appointment");
       padding="padding:84px 24px 40px;"
     >
       <h1 style="margin:14px auto 0;">
-        Schedule your <span class="glory-gold-text">assessment</span>
+        Schedule your <GloryGoldText text="assessment" />
       </h1>
     </PageHero>
 

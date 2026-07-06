@@ -1,5 +1,5 @@
 import { DayPicker, type DayPickerProps } from 'react-day-picker';
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
 import './calendar.scss';
 
 export type CalendarProps = DayPickerProps;

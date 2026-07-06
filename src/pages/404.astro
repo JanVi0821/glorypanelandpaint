@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageHero from "../components/sections/PageHero.astro";
+import PageHero from "../components/astro/sections/PageHero.astro";
+import GloryGoldText from "../components/astro/GloryGoldText.astro";
 import { getPageSeo } from "../data/seo";
 
 const seo = getPageSeo("not-found");
@@ -10,7 +11,7 @@ const seo = getPageSeo("not-found");
   <div class="glory">
     <PageHero centered padding="padding:110px 24px 80px;">
       <h1 style="margin:14px auto 0;">
-        Page <span class="glory-gold-text">not found</span>
+        Page <GloryGoldText text="not found" />
       </h1>
       <p class="glory-sub" style="margin-top:18px; max-width:unset;">
         Sorry, we couldn&rsquo;t find that page. It may have moved &mdash; try

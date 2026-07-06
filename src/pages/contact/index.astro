@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHero from "../../components/sections/PageHero.astro";
-import ContactForm from "../../components/sections/ContactForm.astro";
+import PageHero from "../../components/astro/sections/PageHero.astro";
+import GloryGoldText from "../../components/astro/GloryGoldText.astro";
+import ContactForm from "../../components/astro/sections/ContactForm.astro";
 import { getPageSeo } from "../../data/seo";
 import { business } from "../../data/business";
 import "./styles.scss";
@@ -16,7 +17,7 @@ const mapsEmbed =
   <div class="glory">
     <PageHero centered padding="padding:84px 24px 56px;">
       <h1 style="margin:0 auto;">
-        Contact <span class="glory-gold-text">Us</span>
+        Contact <GloryGoldText text="Us" />
       </h1>
     </PageHero>
 

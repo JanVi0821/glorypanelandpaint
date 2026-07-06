@@ -16,9 +16,9 @@ import {
 	bookingFormSchema,
 	type BookingFormValues,
 } from '../../lib/schemas/booking-form';
-import { Calendar } from '../ui/calendar';
+import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
-import '../ui/calendar.scss';
+import '@/components/ui/calendar.scss';
 
 const defaultValues: BookingFormValues = {
 	name: '',

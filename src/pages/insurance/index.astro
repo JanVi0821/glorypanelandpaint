@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import InsurerChips from '../../components/sections/InsurerChips.astro';
-import FAQ from '../../components/sections/FAQ.astro';
-import CTASection from '../../components/sections/CTASection.astro';
+import PageHero from '../../components/astro/sections/PageHero.astro';
+import GloryGoldText from '../../components/astro/GloryGoldText.astro';
+import InsurerChips from '../../components/astro/sections/InsurerChips.astro';
+import FAQ from '../../components/astro/sections/FAQ.astro';
+import CTASection from '../../components/astro/sections/CTASection.astro';
 import { getPageSeo } from '../../data/seo';
 import { faqPageSchema, insuranceFaq } from '../../lib/schema';
 import './styles.scss';
@@ -19,7 +20,7 @@ const seo = getPageSeo('insurance');
 			padding="padding:84px 24px 56px;"
 		>
 			<h1 style="margin:14px auto 0;">
-				We handle your <span class="glory-gold-text">insurance claim</span>
+				We handle your <GloryGoldText text="insurance claim" />
 			</h1>
 			<p class="glory-sub" style="margin:16px auto 0;">
 				Had an accident? Don&rsquo;t stress about the paperwork. We work with all major NZ insurers
