@@ -1,5 +1,5 @@
-import { BOOKING_CONFIG } from './booking-config';
-import type { BookingSlot } from './api-types';
+import { BOOKING_CONFIG } from './config';
+import type { BookingSlot } from './types';
 
 function pad(n: number): string {
 	return String(n).padStart(2, '0');

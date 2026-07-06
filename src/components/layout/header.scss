@@ -248,6 +248,10 @@ main#main-content {
 		display: block;
 		flex-shrink: 0;
 	}
+
+	.glory-header__main > .glory-site-header__inner{
+		padding: 14px 24px;
+	}
 }
 
 @media (min-width: 769px) {

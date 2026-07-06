@@ -20,7 +20,7 @@ function ChevronRight() {
     );
 }
 
-/** shadcn/ui Calendar — styled with SCSS until Tailwind is added. */
+/** Calendar — day picker with SCSS layout; pair with shadcn/Tailwind elsewhere as needed. */
 export function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
     return (
         <DayPicker

@@ -1,17 +1,6 @@
-export type ContactFormPayload = {
-	name: string;
-	email: string;
-	phone: string;
-	vehicle?: string;
-	message: string;
-	/** Public URLs returned by the upload worker */
-	photos?: string[];
-};
+export type { BookingFormValues } from '../../lib/schemas/booking-form';
 
-export type ContactFormResponse = {
-	ok: boolean;
-	message: string;
-};
+export type BookingStep = 'date' | 'time' | 'details' | 'success';
 
 export type BookingSlot = {
 	start: string;
@@ -30,12 +19,7 @@ export type BookingAppointmentPayload = {
 };
 
 export type BookingAppointmentResponse = {
-	ok: boolean;
+	success: boolean;
 	appointmentId?: string;
 	message: string;
-};
-
-export type ApiError = {
-	ok: false;
-	error: string;
 };

@@ -1,21 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { BOOKING_CONFIG } from '../../../shared/booking-config';
 import {
+	BOOKING_CONFIG,
+	fetchBookingSlots,
 	formatBookingDate,
 	formatSlotLabel,
 	isBookableDate,
+	submitBooking,
 	toApiDate,
-} from '../../../shared/booking-slots';
-import type { BookingSlot } from '../../../shared/api-types';
-import { fetchBookingSlots, submitBooking } from '../../lib/booking-api';
+	type BookingSlot,
+	type BookingStep,
+} from '../../api/booking';
 import {
 	bookingFormSchema,
 	type BookingFormValues,
 } from '../../lib/schemas/booking-form';
-import type { BookingStep } from '../../types/booking';
 import { Calendar } from '../ui/calendar';
+import { Button } from '@/components/ui/button';
 import '../ui/calendar.scss';
 
 const defaultValues: BookingFormValues = {
@@ -99,7 +101,7 @@ export default function BookingWidget() {
 				vehicle: values.vehicle.trim() || undefined,
 				notes: values.notes.trim() || undefined,
 			});
-			setSuccessMessage(result.message);
+			setSuccessMessage(result?.message || '');
 			setStep('success');
 		} catch {
 			setError('root', {
@@ -269,9 +271,14 @@ export default function BookingWidget() {
 						</div>
 
 						<div className="glory-booking__actions">
-							<button type="submit" className="glory-btn-gold" disabled={isSubmitting}>
-								{isSubmitting ? 'Booking…' : 'Book this appointment'}
-							</button>
+							<Button
+								type="submit"
+								variant="gold"
+								size="xl"
+								loading={isSubmitting}
+							>
+								Book this appointment
+							</Button>
 						</div>
 					</form>
 				</div>

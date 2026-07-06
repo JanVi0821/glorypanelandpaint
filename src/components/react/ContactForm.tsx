@@ -6,7 +6,8 @@ import {
 	validateContactPhoto,
 	type ContactFormValues,
 } from '../../lib/schemas/contact-form';
-import { uploadFile } from '../../lib/upload-file';
+import { submitContactForm, uploadContactFile } from '../../api/contact';
+import { Button } from '@/components/ui/button';
 
 interface Props {
 	quotesEmail: string;
@@ -63,7 +64,7 @@ export default function ContactForm({ quotesEmail }: Props) {
 		const id = crypto.randomUUID();
 		setUploads((prev) => [...prev, { id, name: file.name, status: 'uploading' }]);
 
-		uploadFile(file)
+		uploadContactFile(file)
 			.then((url) => {
 				setUploads((prev) => {
 					const next = prev.map((item) =>
@@ -126,7 +127,6 @@ export default function ContactForm({ quotesEmail }: Props) {
 		clearErrors('root');
 
 		try {
-			const { submitContactForm } = await import('../../lib/submit-contact');
 			const result = await submitContactForm(values);
 			setSuccessMessage(result.message);
 			setStatus('success');
@@ -308,9 +308,15 @@ export default function ContactForm({ quotesEmail }: Props) {
 			</div>
 
 			<div className="field">
-				<button type="submit" className="glory-btn-gold" disabled={submitting || hasUploading}>
-					{submitting ? 'Sending…' : hasUploading ? 'Waiting for uploads…' : 'Submit'}
-				</button>
+				<Button
+					type="submit"
+					variant="gold"
+					size="xl"
+					loading={submitting}
+					disabled={hasUploading}
+				>
+					{hasUploading ? 'Waiting for uploads…' : 'Submit'}
+				</Button>
 			</div>
 
 			<p className="glory-form__fallback">
