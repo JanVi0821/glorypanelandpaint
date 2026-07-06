@@ -1,3 +1,40 @@
+/* ---- Gold shiny text (SSR-safe — no React island in headings) ---- */
+.glory-gold-shiny {
+	display: inline-block;
+	background: linear-gradient(
+		120deg,
+		#c2a576 0%,
+		#c2a576 35%,
+		#f2e6d2 50%,
+		#c2a576 65%,
+		#c2a576 100%
+	);
+	background-size: 200% auto;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	animation: glory-gold-shine 3s linear infinite;
+}
+
+@keyframes glory-gold-shine {
+	from {
+		background-position: 150% center;
+	}
+
+	to {
+		background-position: -50% center;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.glory-gold-shiny {
+		animation: none;
+		background: var(--glory-gold-grad);
+		background-position: center;
+	}
+}
+
 /* ---- Gold gradient button ---- */
 .glory-btn-gold,
 .glory-btn-gold:visited {
