@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'https://glorypanelandpaint.jan-wei0821.workers.dev';
+export const API_BASE_URL = 'https://storefront.glorypanelandpaint.workers.dev';
 
 export class ApiClientError extends Error {
 	constructor(
