@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'https://storefront.glorypanelandpaint.workers.dev';
+export const API_BASE_URL = import.meta.env.PUBLIC_API_BASE_URL || 'https://storefront.glorypanelandpaint.workers.dev';
 
 export class ApiClientError extends Error {
 	constructor(
@@ -76,6 +76,10 @@ export class ApiClient {
 		}
 
 		return data;
+	}
+
+	get<T>(path: string): Promise<T> {
+		return this.request<T>(path, { method: 'GET' });
 	}
 
 	post<T>(path: string, body: unknown): Promise<T> {

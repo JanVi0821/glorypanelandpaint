@@ -66,6 +66,13 @@ export const pageSeo: Record<string, PageSeo> = {
         // Step 2 of the booking funnel — keep search traffic on /book-online/
         noindex: true,
     },
+    'book-cancel': {
+        path: '/book-cancel/',
+        focusKeyword: 'cancel appointment',
+        title: 'Cancel Appointment | Glory Panel & Paint',
+        description: 'Cancel your vehicle assessment appointment at Glory Panel & Paint.',
+        noindex: true,
+    },
     'not-found': {
         path: '/404/',
         focusKeyword: 'page not found',

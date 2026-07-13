@@ -1,4 +1,3 @@
-@import './tokens.css';
-@import './base';
-@import './utilities';
-@import './layout';
+@use './base';
+@use './utilities';
+@use './layout';

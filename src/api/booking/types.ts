@@ -23,3 +23,8 @@ export type BookingAppointmentResponse = {
 	appointmentId?: string;
 	message: string;
 };
+
+export type BookingCancelResponse = {
+	success: boolean;
+	message?: string;
+};

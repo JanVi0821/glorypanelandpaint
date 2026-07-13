@@ -1,20 +1,21 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import type { PageSeo } from '../data/seo';
-import { business } from '../data/business';
-import Header from '../components/astro/layout/Header.astro';
-import Footer from '../components/astro/layout/Footer.astro';
-import PromoPopup from '../components/react/PromoPopup';
+import type { PageSeo } from 'src/data/seo';
+import { business } from 'src/data/business';
+import Header from 'src/components/astro/layout/Header.astro';
+import Footer from 'src/components/astro/layout/Footer.astro';
+import PromoPopup from 'src/components/react/PromoPopup';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/oswald/500.css';
 import '@fontsource/oswald/600.css';
 import '@fontsource/oswald/700.css';
-import '../styles/tailwind.css';
-import '../styles/global.scss';
-import '../components/astro/sections/page-hero.scss';
-import '../components/react/promo-popup.scss';
+import 'src/styles/tokens.css';
+import 'src/styles/tailwind.css';
+import 'src/styles/global.scss';
+import 'src/components/astro/sections/page-hero.scss';
+import 'src/components/react/promo-popup.scss';
 
 interface Props {
     seo: PageSeo;

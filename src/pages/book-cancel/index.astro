@@ -1,0 +1,9 @@
+---
+import BookCancel from "./_BookCancel";
+import { getPageSeo } from "src/data/seo";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout seo={getPageSeo("book-cancel")}>
+  <BookCancel client:load />
+</BaseLayout>

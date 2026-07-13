@@ -8,6 +8,13 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+/** Paths excluded from sitemap (noindexed / utility pages). */
+const SITEMAP_EXCLUDED_PATHS = [
+	'/book-appointment/',
+	'/book-cancel/',
+	'/404',
+];
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://glorypanelandpaint.jan0821.com',
@@ -15,7 +22,7 @@ export default defineConfig({
 		react(),
 		sitemap({
 			// Keep noindexed / utility pages out of the sitemap
-			filter: (page) => !page.includes('/book-appointment/') && !page.includes('/404'),
+			filter: (page) => !SITEMAP_EXCLUDED_PATHS.some((path) => page.includes(path)),
 			lastmod: new Date(),
 		}),
 	],

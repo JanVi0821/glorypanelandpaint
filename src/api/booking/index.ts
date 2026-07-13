@@ -1,5 +1,5 @@
 export { BOOKING_CONFIG } from './config';
-export { fetchBookingSlots, submitBooking } from './appointment';
+export { cancelBooking, fetchBookingSlots, submitBooking } from './appointment';
 export {
 	formatBookingDate,
 	formatSlotLabel,
@@ -10,6 +10,7 @@ export {
 export type {
 	BookingAppointmentPayload,
 	BookingAppointmentResponse,
+	BookingCancelResponse,
 	BookingFormValues,
 	BookingSlot,
 	BookingStep,
