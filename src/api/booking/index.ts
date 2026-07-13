@@ -1,17 +1,4 @@
-export { BOOKING_CONFIG } from './config';
-export { cancelBooking, fetchBookingSlots, submitBooking } from './appointment';
-export {
-	formatBookingDate,
-	formatSlotLabel,
-	generateSlots,
-	isBookableDate,
-	toApiDate,
-} from './slots';
-export type {
-	BookingAppointmentPayload,
-	BookingAppointmentResponse,
-	BookingCancelResponse,
-	BookingFormValues,
-	BookingSlot,
-	BookingStep,
-} from './types';
+export * from "./config";
+export * from "./appointment";
+export * from "./slots";
+export * from "./types";

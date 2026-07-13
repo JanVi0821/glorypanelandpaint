@@ -118,6 +118,20 @@
 	font-weight: 600;
 }
 
+.glory-booking__slot.is-disabled,
+.glory-booking__slot:disabled {
+	opacity: 0.38;
+	cursor: not-allowed;
+	border-color: var(--glory-border);
+	color: #6f6f78;
+}
+
+.glory-booking__slot.is-disabled:hover,
+.glory-booking__slot:disabled:hover {
+	border-color: var(--glory-border);
+	background: #0e0e12;
+}
+
 .glory-booking__actions {
 	display: flex;
 	justify-content: center;

@@ -1,94 +1,105 @@
-import { BOOKING_CONFIG } from './config';
-import type { BookingSlot } from './types';
+import { TZDate } from "@date-fns/tz";
+import { differenceInCalendarDays } from "date-fns";
+import { BOOKING_CONFIG } from "./config";
+import type { BookingSlot } from "./types";
 
-function pad(n: number): string {
-	return String(n).padStart(2, '0');
+const TZ = BOOKING_CONFIG.timezone;
+
+function calendarParts(date: Date) {
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth(),
+    day: date.getDate(),
+  };
 }
 
-function startOfDay(date: Date): Date {
-	return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+function nzTimestamp(
+  year: number,
+  month: number,
+  day: number,
+  hour: number,
+  minute: number,
+): number {
+  return new TZDate(year, month, day, hour, minute, 0, TZ).getTime();
 }
 
-function addDays(date: Date, days: number): Date {
-	const next = new Date(date);
-	next.setDate(next.getDate() + days);
-	return next;
-}
-
-function parseDateString(dateStr: string): Date | null {
-	if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return null;
-	const [y, m, d] = dateStr.split('-').map(Number);
-	return new Date(y, m - 1, d);
+export function toIsoTimestamp(ms: number): string {
+  return new Date(ms).toISOString();
 }
 
 /** Whether a calendar day can be selected (Mon–Sat, not in the past, within advance window). */
 export function isBookableDate(date: Date, now = new Date()): boolean {
-	const day = date.getDay();
-	if (day === 0) return false;
+  const { year, month, day } = calendarParts(date);
+  const candidate = new TZDate(year, month, day, 12, 0, 0, TZ);
+  if (candidate.getDay() === 0) return false;
 
-	const today = startOfDay(now);
-	const candidate = startOfDay(date);
-	if (candidate < today) return false;
+  const today = TZDate.tz(TZ, now);
+  const todayAnchor = new TZDate(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+    12,
+    0,
+    0,
+    TZ,
+  );
+  const diff = differenceInCalendarDays(candidate, todayAnchor);
 
-	const maxDate = addDays(today, BOOKING_CONFIG.maxAdvanceDays);
-	if (candidate > maxDate) return false;
-
-	return true;
+  return diff >= 0 && diff <= BOOKING_CONFIG.maxAdvanceDays;
 }
 
-/** Generate 30-minute assessment slots for a given YYYY-MM-DD date. */
-export function generateSlots(dateStr: string, now = new Date()): BookingSlot[] {
-	const date = parseDateString(dateStr);
-	if (!date) return [];
+/** Generate all assessment slots for a calendar day in NZ time. */
+export function generateSlots(date: Date, now = Date.now()): BookingSlot[] {
+  const { year, month, day } = calendarParts(date);
+  const dayOfWeek = new TZDate(year, month, day, 12, 0, 0, TZ).getDay();
+  if (dayOfWeek === 0) return [];
 
-	const day = date.getDay();
-	if (day === 0) return [];
+  const hours =
+    dayOfWeek === 6 ? BOOKING_CONFIG.saturday : BOOKING_CONFIG.weekday;
+  const slots: BookingSlot[] = [];
+  let cursor = hours.openHour * 60 + hours.openMinute;
+  const close = hours.closeHour * 60 + hours.closeMinute;
 
-	const hours = day === 6 ? BOOKING_CONFIG.saturday : BOOKING_CONFIG.weekday;
-	const slots: BookingSlot[] = [];
+  while (cursor + BOOKING_CONFIG.durationMinutes <= close) {
+    const start = nzTimestamp(
+      year,
+      month,
+      day,
+      Math.floor(cursor / 60),
+      cursor % 60,
+    );
+    const end = start + BOOKING_CONFIG.durationMinutes * 60_000;
 
-	let cursor = hours.openHour * 60 + hours.openMinute;
-	const end = hours.closeHour * 60 + hours.closeMinute;
+    slots.push({
+      start,
+      end,
+      available: start > now,
+    });
 
-	while (cursor + BOOKING_CONFIG.durationMinutes <= end) {
-		const startHour = Math.floor(cursor / 60);
-		const startMin = cursor % 60;
-		const endCursor = cursor + BOOKING_CONFIG.durationMinutes;
-		const endHour = Math.floor(endCursor / 60);
-		const endMin = endCursor % 60;
+    cursor += BOOKING_CONFIG.durationMinutes;
+  }
 
-		const start = new Date(date.getFullYear(), date.getMonth(), date.getDate(), startHour, startMin);
-		const endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), endHour, endMin);
-
-		slots.push({
-			start: start.toISOString(),
-			end: endTime.toISOString(),
-			available: start > now,
-		});
-
-		cursor += BOOKING_CONFIG.durationMinutes;
-	}
-
-	return slots;
+  return slots;
 }
 
-export function toApiDate(date: Date): string {
-	return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-}
-
-export function formatSlotLabel(iso: string): string {
-	return new Date(iso).toLocaleTimeString('en-NZ', {
-		hour: 'numeric',
-		minute: '2-digit',
-		hour12: true,
-	});
+export function formatSlotLabel(start: number): string {
+  return new Date(start).toLocaleTimeString("en-NZ", {
+    timeZone: TZ,
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
 }
 
 export function formatBookingDate(date: Date): string {
-	return date.toLocaleDateString('en-NZ', {
-		weekday: 'long',
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric',
-	});
+  const { year, month, day } = calendarParts(date);
+  return new TZDate(year, month, day, 12, 0, 0, TZ).toLocaleDateString(
+    "en-NZ",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    },
+  );
 }
