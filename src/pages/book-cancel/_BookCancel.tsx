@@ -7,8 +7,7 @@ import { cn } from "@/lib/utils";
 
 type CancelState = "loading" | "success" | "not-found";
 
-const frameClass =
-  "flex min-h-[50vh] flex-col items-center justify-center p-6";
+const frameClass = "flex min-h-[50vh] flex-col items-center justify-center p-6";
 
 const messageClass =
   "m-0 max-w-md text-[clamp(1.1rem,2.5vw,1.45rem)] leading-snug font-bold font-[family-name:var(--glory-head-font)]";
