@@ -26,8 +26,8 @@ const seo = getPageSeo("home");
         of mind your vehicle is in the best hands.
       </p>
       <div class="glory-btns">
-        <a class="glory-btn-gold" href="/contact/">Get a Free Quote</a>
-        <a class="glory-btn-outline" href="/book-online/">Book Online</a>
+        <a class="glory-btn-gold" href="/contact/" data-ph-cta="Get a Free Quote">Get a Free Quote</a>
+        <a class="glory-btn-outline" href="/book-online/" data-ph-cta="Book Online">Book Online</a>
       </div>
       <div class="glory-trust">
         <span>&#9733;&#9733;&#9733;&#9733;&#9733; <b>5.0</b> on Google</span>
@@ -74,4 +74,18 @@ const seo = getPageSeo("home");
       showMeta
     />
   </div>
+
+<script is:inline>
+  function setupHeroCtas() {
+    document.querySelectorAll('[data-ph-cta]').forEach(function(el) {
+      el.removeEventListener('click', el.__phCtaHandler);
+      el.__phCtaHandler = function() {
+        window.posthog?.capture('hero_cta_clicked', { cta_label: el.getAttribute('data-ph-cta') });
+      };
+      el.addEventListener('click', el.__phCtaHandler);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', setupHeroCtas);
+  document.addEventListener('astro:page-load', setupHeroCtas);
+</script>
 </BaseLayout>

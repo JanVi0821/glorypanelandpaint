@@ -81,4 +81,18 @@ const seo = getPageSeo('insurance');
 			buttonHref="/book-online/"
 		/>
 	</div>
+
+	<script is:inline>
+	  function setupInsuranceCtaTracking() {
+	    document.querySelectorAll('.glory-cta a.glory-btn-gold').forEach(function(el) {
+	      el.removeEventListener('click', el.__phInsHandler);
+	      el.__phInsHandler = function() {
+	        window.posthog?.capture('insurance_cta_clicked', { cta_label: el.textContent?.trim() });
+	      };
+	      el.addEventListener('click', el.__phInsHandler);
+	    });
+	  }
+	  document.addEventListener('DOMContentLoaded', setupInsuranceCtaTracking);
+	  document.addEventListener('astro:page-load', setupInsuranceCtaTracking);
+	</script>
 </BaseLayout>
