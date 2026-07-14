@@ -73,8 +73,9 @@ export default function ContactForm({ quotesEmail }: Props) {
 					syncPhotoUrls(next, setValue);
 					return next;
 				});
+				window.posthog?.capture("quote_photo_uploaded");
 			})
-			.catch(() => {
+			.catch((err) => {
 				setUploads((prev) =>
 					prev.map((item) =>
 						item.id === id
@@ -82,6 +83,7 @@ export default function ContactForm({ quotesEmail }: Props) {
 							: item,
 					),
 				);
+				window.posthog?.captureException(err);
 			});
 	};
 
@@ -133,11 +135,16 @@ export default function ContactForm({ quotesEmail }: Props) {
 			reset(defaultValues);
 			setUploads([]);
 			if (fileInputRef.current) fileInputRef.current.value = '';
-		} catch {
+			window.posthog?.capture("quote_request_submitted", {
+				has_vehicle: !!values.vehicle.trim(),
+				photo_count: values.photos.length,
+			});
+		} catch (err) {
 			setError('root', {
 				message: 'Something went wrong. Please try again or email us directly.',
 			});
 			setStatus('idle');
+			window.posthog?.captureException(err);
 		}
 	});
 

@@ -22,6 +22,7 @@ export default function PromoPopup() {
             } catch {
                 /* ignore */
             }
+            window.posthog?.capture("promo_popup_shown");
         }, promo.delayMs);
 
         return () => window.clearTimeout(timer);
@@ -50,7 +51,7 @@ export default function PromoPopup() {
                 <button
                     type="button"
                     className="glory-promo__close"
-                    onClick={close}
+                    onClick={() => { window.posthog?.capture("promo_popup_dismissed"); close(); }}
                     aria-label="Close"
                 >
                     &times;
@@ -60,7 +61,7 @@ export default function PromoPopup() {
                     {promo.subline}{' '}
                     <span className="glory-gold-shiny">{promo.highlight}</span>
                 </p>
-                <a className="glory-btn-gold glory-promo__cta" href={promo.ctaHref} onClick={close}>
+                <a className="glory-btn-gold glory-promo__cta" href={promo.ctaHref} onClick={() => { window.posthog?.capture("promo_popup_cta_clicked"); close(); }}>
                     {promo.ctaLabel}
                 </a>
             </div>

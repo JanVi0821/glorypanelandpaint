@@ -64,6 +64,7 @@ export default function BookingWidget() {
     try {
       await loadSlots(selectedDate);
       setStep("time");
+      window.posthog?.capture("booking_date_selected");
     } catch {
       setSlotError("Unable to load available times. Please try again.");
     } finally {
@@ -78,6 +79,7 @@ export default function BookingWidget() {
     }
     setSlotError("");
     setStep("details");
+    window.posthog?.capture("booking_time_selected");
   };
 
   const onDateSelect = (date: Date | undefined) => {
@@ -104,10 +106,15 @@ export default function BookingWidget() {
       });
       setSuccessMessage(result?.message || "");
       setStep("success");
-    } catch {
+      window.posthog?.capture("booking_submitted", {
+        has_vehicle: !!values.vehicle.trim(),
+        has_notes: !!values.notes.trim(),
+      });
+    } catch (err) {
       setError("root", {
         message: "Something went wrong. Please try again or call us.",
       });
+      window.posthog?.captureException(err);
     }
   });
 

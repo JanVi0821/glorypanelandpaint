@@ -30,7 +30,10 @@ export default function BookCancel() {
 
     cancelBooking(bookingId)
       .then((res) => {
-        if (!cancelled) setState("success");
+        if (!cancelled) {
+          setState("success");
+          window.posthog?.capture("booking_cancelled");
+        }
       })
       .catch((err) => {
         if (!cancelled) setState("not-found");
