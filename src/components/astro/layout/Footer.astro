@@ -92,3 +92,17 @@ const tagline =
 		</div>
 	</div>
 </footer>
+
+<script is:inline>
+  function setupPhoneCallTracking() {
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(el) {
+      el.removeEventListener('click', el.__phPhoneHandler);
+      el.__phPhoneHandler = function() {
+        window.posthog?.capture('phone_call_clicked');
+      };
+      el.addEventListener('click', el.__phPhoneHandler);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', setupPhoneCallTracking);
+  document.addEventListener('astro:page-load', setupPhoneCallTracking);
+</script>

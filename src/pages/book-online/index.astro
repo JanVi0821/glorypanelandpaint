@@ -32,10 +32,24 @@ import "./styles.scss";
           <div class="glory-bookcard-body">
             <h2>Insurance Assessment Appointment</h2>
             <div class="glory-bookcard-meta">30 min</div>
-            <a href="/book-appointment/" class="glory-btn-gold">Book Now</a>
+            <a href="/book-appointment/" class="glory-btn-gold" id="book-online-btn">Book Now</a>
           </div>
         </div>
       </div>
     </section>
   </div>
+
+<script is:inline>
+  function setupBookOnlineBtn() {
+    var btn = document.getElementById('book-online-btn');
+    if (!btn) return;
+    btn.removeEventListener('click', btn.__phHandler);
+    btn.__phHandler = function() {
+      window.posthog?.capture('book_now_clicked');
+    };
+    btn.addEventListener('click', btn.__phHandler);
+  }
+  document.addEventListener('DOMContentLoaded', setupBookOnlineBtn);
+  document.addEventListener('astro:page-load', setupBookOnlineBtn);
+</script>
 </BaseLayout>

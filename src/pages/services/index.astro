@@ -35,7 +35,7 @@ import './styles.scss';
 								<h2>{svc.title}</h2>
 								<p>{svc.description}</p>
 								<div class="glory-btns">
-									<a class="glory-btn-gold" href={svc.ctaHref}>
+									<a class="glory-btn-gold" href={svc.ctaHref} data-ph-service-id={svc.id} data-ph-cta-label={svc.ctaLabel}>
 										{svc.ctaLabel}
 									</a>
 								</div>
@@ -54,3 +54,20 @@ import './styles.scss';
 		/>
 	</div>
 </BaseLayout>
+
+<script is:inline>
+  function setupServiceCtaTracking() {
+    document.querySelectorAll('[data-ph-service-id]').forEach(function(el) {
+      el.removeEventListener('click', el.__phSvcHandler);
+      el.__phSvcHandler = function() {
+        window.posthog?.capture('service_cta_clicked', {
+          service_id: el.getAttribute('data-ph-service-id'),
+          cta_label: el.getAttribute('data-ph-cta-label'),
+        });
+      };
+      el.addEventListener('click', el.__phSvcHandler);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', setupServiceCtaTracking);
+  document.addEventListener('astro:page-load', setupServiceCtaTracking);
+</script>
